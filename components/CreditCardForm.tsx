@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import { useForm, FormProvider } from 'react-hook-form'
+import cardValidator from 'card-validator'
 import Button from './Button'
 import FormTextField from './FormTextField'
 
@@ -13,6 +14,9 @@ interface FormModel {
 
 const CreditCardForm: React.FC = () => {
   const formMethods = useForm<FormModel>({
+    // to trigger the validation on the blur event
+    mode: 'onBlur',
+    reValidateMode: 'onChange',
     defaultValues: {
       holderName: '',
       cardNumber: '',
@@ -32,11 +36,34 @@ const CreditCardForm: React.FC = () => {
           style={styles.textField}
           name="holderName"
           label="Cardholder Name"
+          rules={{
+            required: 'Cardholder name is required.',
+            validate: {
+              isValid: (value: string) => {
+                return (
+                  cardValidator.cardholderName(value).isValid ||
+                  'Cardholder name looks invalid.'
+                )
+              },
+            },
+          }}
         />
         <FormTextField
           style={styles.textField}
           name="cardNumber"
           label="Card Number"
+          keyboardType="number-pad"
+          rules={{
+            required: 'Card number is required.',
+            validate: {
+              isValid: (value: string) => {
+                return (
+                  cardValidator.number(value).isValid ||
+                  'This card number looks invalid.'
+                )
+              },
+            },
+          }}
         />
         <View style={styles.row}>
           <FormTextField
@@ -48,12 +75,39 @@ const CreditCardForm: React.FC = () => {
             ]}
             name="expiration"
             label="Expiration Date"
+            rules={{
+              required: 'Expiration date is required.',
+              validate: {
+                isValid: (value: string) => {
+                  return (
+                    cardValidator.expirationDate(value).isValid ||
+                    'This expiration date looks invalid.'
+                  )
+                },
+              },
+            }}
           />
           <FormTextField
             style={styles.textField}
             name="cvv"
             label="Security Code"
             keyboardType="number-pad"
+            maxLength={4}
+            rules={{
+              required: 'Security code is required.',
+              validate: {
+                isValid: (value: string) => {
+                  const cardNumber = formMethods.getValues('cardNumber')
+                  const { card } = cardValidator.number(cardNumber)
+                  const cvvLength = card?.type === 'american-express' ? 4 : 3
+
+                  return (
+                    cardValidator.cvv(value, cvvLength).isValid ||
+                    'This security code looks invalid.'
+                  )
+                },
+              },
+            }}
           />
         </View>
         <Button

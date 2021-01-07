@@ -1,13 +1,14 @@
 import React from 'react'
-import { useFormContext, Controller } from 'react-hook-form'
+import { useFormContext, Controller, RegisterOptions } from 'react-hook-form'
 import TextField from './TextField'
 
 type Props = React.ComponentProps<typeof TextField> & {
   name: string
+  rules: RegisterOptions
 }
 
 const FormTextField: React.FC<Props> = (props) => {
-  const { name, ...restOfProps } = props
+  const { name, rules, ...restOfProps } = props
   const { control, errors } = useFormContext()
 
   return (
@@ -25,6 +26,7 @@ const FormTextField: React.FC<Props> = (props) => {
         />
       )}
       name={name}
+      rules={rules}
     />
   )
 }
