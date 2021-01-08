@@ -16,7 +16,6 @@ const CreditCardForm: React.FC = () => {
   const formMethods = useForm<FormModel>({
     // to trigger the validation on the blur event
     mode: 'onBlur',
-    reValidateMode: 'onChange',
     defaultValues: {
       holderName: '',
       cardNumber: '',
@@ -53,6 +52,8 @@ const CreditCardForm: React.FC = () => {
           name="cardNumber"
           label="Card Number"
           keyboardType="number-pad"
+          maxLength={16}
+          validationLength={16}
           rules={{
             required: 'Card number is required.',
             validate: {
@@ -75,6 +76,8 @@ const CreditCardForm: React.FC = () => {
             ]}
             name="expiration"
             label="Expiration Date"
+            maxLength={5}
+            validationLength={5}
             rules={{
               required: 'Expiration date is required.',
               validate: {
@@ -93,6 +96,7 @@ const CreditCardForm: React.FC = () => {
             label="Security Code"
             keyboardType="number-pad"
             maxLength={4}
+            validationLength={3}
             rules={{
               required: 'Security code is required.',
               validate: {
