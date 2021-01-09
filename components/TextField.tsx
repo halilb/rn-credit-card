@@ -54,6 +54,7 @@ const TextField: React.FC<Props> = (props) => {
         ]}
         ref={inputRef}
         {...restOfProps}
+        value={value}
         onBlur={(event) => {
           setIsFocused(false)
           onBlur?.(event)

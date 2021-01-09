@@ -6,10 +6,11 @@ type Props = React.ComponentProps<typeof TextField> & {
   name: string
   rules: RegisterOptions
   validationLength?: number
+  formatter?: (oldValue: string, newValue: string) => string
 }
 
 const FormTextField: React.FC<Props> = (props) => {
-  const { name, rules, validationLength = 1, ...restOfProps } = props
+  const { name, rules, validationLength = 1, formatter, ...restOfProps } = props
   const { control, errors, trigger, watch } = useFormContext()
   const value = watch(name)
 
@@ -29,7 +30,10 @@ const FormTextField: React.FC<Props> = (props) => {
           {...restOfProps}
           errorText={errors[name]?.message}
           onBlur={onBlur}
-          onChangeText={(value) => onChange(value)}
+          onChangeText={(text) => {
+            const newValue = formatter ? formatter(value, text) : text
+            onChange(newValue)
+          }}
           value={value}
         />
       )}

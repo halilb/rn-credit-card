@@ -4,6 +4,10 @@ import { useForm, FormProvider } from 'react-hook-form'
 import cardValidator from 'card-validator'
 import Button from './Button'
 import FormTextField from './FormTextField'
+import {
+  cardNumberFormatter,
+  expirationDateFormatter,
+} from '../utils/formatters'
 
 interface FormModel {
   holderName: string
@@ -52,8 +56,8 @@ const CreditCardForm: React.FC = () => {
           name="cardNumber"
           label="Card Number"
           keyboardType="number-pad"
-          maxLength={16}
-          validationLength={16}
+          maxLength={19}
+          validationLength={19}
           rules={{
             required: 'Card number is required.',
             validate: {
@@ -65,6 +69,7 @@ const CreditCardForm: React.FC = () => {
               },
             },
           }}
+          formatter={cardNumberFormatter}
         />
         <View style={styles.row}>
           <FormTextField
@@ -89,6 +94,7 @@ const CreditCardForm: React.FC = () => {
                 },
               },
             }}
+            formatter={expirationDateFormatter}
           />
           <FormTextField
             style={styles.textField}
