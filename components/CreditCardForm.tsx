@@ -8,6 +8,7 @@ import {
   cardNumberFormatter,
   expirationDateFormatter,
 } from '../utils/formatters'
+import CardIcon from './CardIcon'
 
 interface FormModel {
   holderName: string
@@ -32,6 +33,8 @@ const CreditCardForm: React.FC = () => {
   const cardNumberRef = useRef<TextInput>(null)
   const expirationRef = useRef<TextInput>(null)
   const cvvRef = useRef<TextInput>(null)
+
+  const cardNumber = formMethods.watch('cardNumber')
 
   function onSubmit(model: FormModel) {
     console.log('form submitted', model)
@@ -78,6 +81,7 @@ const CreditCardForm: React.FC = () => {
             },
           }}
           formatter={cardNumberFormatter}
+          endEnhancer={<CardIcon cardNumber={cardNumber} />}
           onValid={() => expirationRef.current?.focus()}
         />
         <View style={styles.row}>

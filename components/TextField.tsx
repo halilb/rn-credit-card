@@ -12,6 +12,7 @@ import {
 type Props = React.ComponentProps<typeof TextInput> & {
   label: string
   errorText?: string | null
+  endEnhancer?: React.ReactNode
 }
 
 const TextField = React.forwardRef<TextInput, Props>((props, ref) => {
@@ -19,6 +20,7 @@ const TextField = React.forwardRef<TextInput, Props>((props, ref) => {
     label,
     errorText,
     value,
+    endEnhancer,
     style,
     onBlur,
     onFocus,
@@ -109,6 +111,9 @@ const TextField = React.forwardRef<TextInput, Props>((props, ref) => {
           </Text>
         </Animated.View>
       </TouchableWithoutFeedback>
+      {endEnhancer && (
+        <View style={styles.enhancerContainer}>{endEnhancer}</View>
+      )}
       {!!errorText && <Text style={styles.error}>{errorText}</Text>}
     </View>
   )
@@ -130,6 +135,11 @@ const styles = StyleSheet.create({
   label: {
     fontFamily: 'Avenir-Heavy',
     fontSize: 16,
+  },
+  enhancerContainer: {
+    position: 'absolute',
+    top: 12,
+    right: 16,
   },
   error: {
     marginTop: 4,
