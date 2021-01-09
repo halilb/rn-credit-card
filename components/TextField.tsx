@@ -14,7 +14,7 @@ type Props = React.ComponentProps<typeof TextInput> & {
   errorText?: string | null
 }
 
-const TextField: React.FC<Props> = (props) => {
+const TextField = React.forwardRef<TextInput, Props>((props, ref) => {
   const {
     label,
     errorText,
@@ -26,7 +26,6 @@ const TextField: React.FC<Props> = (props) => {
   } = props
   const [isFocused, setIsFocused] = useState(false)
 
-  const inputRef = useRef<TextInput>(null)
   const focusAnim = useRef(new Animated.Value(0)).current
 
   useEffect(() => {
@@ -52,7 +51,7 @@ const TextField: React.FC<Props> = (props) => {
             borderColor: color,
           },
         ]}
-        ref={inputRef}
+        ref={ref}
         {...restOfProps}
         value={value}
         onBlur={(event) => {
@@ -64,7 +63,12 @@ const TextField: React.FC<Props> = (props) => {
           onFocus?.(event)
         }}
       />
-      <TouchableWithoutFeedback onPress={() => inputRef.current?.focus()}>
+      <TouchableWithoutFeedback
+        onPress={() => {
+          // @ts-ignore
+          ref?.current?.focus()
+        }}
+      >
         <Animated.View
           style={[
             styles.labelContainer,
@@ -108,7 +112,7 @@ const TextField: React.FC<Props> = (props) => {
       {!!errorText && <Text style={styles.error}>{errorText}</Text>}
     </View>
   )
-}
+})
 
 const styles = StyleSheet.create({
   input: {

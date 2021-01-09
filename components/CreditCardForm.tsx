@@ -1,5 +1,5 @@
-import React from 'react'
-import { StyleSheet, View } from 'react-native'
+import React, { useRef } from 'react'
+import { Keyboard, StyleSheet, TextInput, View } from 'react-native'
 import { useForm, FormProvider } from 'react-hook-form'
 import cardValidator from 'card-validator'
 import Button from './Button'
@@ -28,6 +28,11 @@ const CreditCardForm: React.FC = () => {
     },
   })
 
+  const holderNameRef = useRef<TextInput>(null)
+  const cardNumberRef = useRef<TextInput>(null)
+  const expirationRef = useRef<TextInput>(null)
+  const cvvRef = useRef<TextInput>(null)
+
   function onSubmit(model: FormModel) {
     console.log('form submitted', model)
   }
@@ -37,6 +42,7 @@ const CreditCardForm: React.FC = () => {
       <FormProvider {...formMethods}>
         <FormTextField
           style={styles.textField}
+          ref={holderNameRef}
           name="holderName"
           label="Cardholder Name"
           rules={{
@@ -50,9 +56,11 @@ const CreditCardForm: React.FC = () => {
               },
             },
           }}
+          onSubmitEditing={() => cardNumberRef.current?.focus()}
         />
         <FormTextField
           style={styles.textField}
+          ref={cardNumberRef}
           name="cardNumber"
           label="Card Number"
           keyboardType="number-pad"
@@ -70,6 +78,7 @@ const CreditCardForm: React.FC = () => {
             },
           }}
           formatter={cardNumberFormatter}
+          onValid={() => expirationRef.current?.focus()}
         />
         <View style={styles.row}>
           <FormTextField
@@ -79,8 +88,10 @@ const CreditCardForm: React.FC = () => {
                 marginRight: 24,
               },
             ]}
+            ref={expirationRef}
             name="expiration"
             label="Expiration Date"
+            keyboardType="number-pad"
             maxLength={5}
             validationLength={5}
             rules={{
@@ -95,9 +106,11 @@ const CreditCardForm: React.FC = () => {
               },
             }}
             formatter={expirationDateFormatter}
+            onValid={() => cvvRef.current?.focus()}
           />
           <FormTextField
             style={styles.textField}
+            ref={cvvRef}
             name="cvv"
             label="Security Code"
             keyboardType="number-pad"
@@ -117,6 +130,10 @@ const CreditCardForm: React.FC = () => {
                   )
                 },
               },
+            }}
+            onValid={() => {
+              // form is completed so hide the keyboard
+              Keyboard.dismiss()
             }}
           />
         </View>
