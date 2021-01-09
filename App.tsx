@@ -1,12 +1,38 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, ScrollView } from 'react-native'
-import CreditCardForm from './components/CreditCardForm'
+import { FormProvider, useForm } from 'react-hook-form'
+import { Alert, StyleSheet, Text, ScrollView } from 'react-native'
+import cardValidator from 'card-validator'
+import Button from './components/Button'
+import CreditCardForm, { FormModel } from './components/CreditCardForm'
 
 const App: React.FC = () => {
+  const formMethods = useForm<FormModel>({
+    // to trigger the validation on the blur event
+    mode: 'onBlur',
+    defaultValues: {
+      holderName: 'Halil Bilir',
+      cardNumber: '',
+      expiration: '',
+      cvv: '',
+    },
+  })
+  const cardNumber = formMethods.watch('cardNumber')
+  const cardType = cardValidator.number(cardNumber).card?.niceType
+
+  function onSubmit(model: FormModel) {
+    Alert.alert('Success')
+  }
+
   return (
     <ScrollView contentContainerStyle={styles.content}>
-      <Text style={styles.title}>Payment details</Text>
-      <CreditCardForm />
+      <FormProvider {...formMethods}>
+        <Text style={styles.title}>Payment details</Text>
+        <CreditCardForm />
+        <Button
+          title={cardType ? `PAY $15.12 with ${cardType}` : 'PAY $15.12'}
+          onPress={formMethods.handleSubmit(onSubmit)}
+        />
+      </FormProvider>
     </ScrollView>
   )
 }
