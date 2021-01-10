@@ -10,7 +10,7 @@ const App: React.FC = () => {
     // to trigger the validation on the blur event
     mode: 'onBlur',
     defaultValues: {
-      holderName: 'Halil Bilir',
+      holderName: '',
       cardNumber: '',
       expiration: '',
       cvv: '',
@@ -20,7 +20,7 @@ const App: React.FC = () => {
   const cardType = cardValidator.number(cardNumber).card?.niceType
 
   function onSubmit(model: FormModel) {
-    Alert.alert('Success')
+    Alert.alert('Success: ' + JSON.stringify(model, null, 2))
   }
 
   return (
@@ -29,7 +29,11 @@ const App: React.FC = () => {
         <Text style={styles.title}>Payment details</Text>
         <CreditCardForm />
         <Button
-          title={cardType ? `PAY $15.12 with ${cardType}` : 'PAY $15.12'}
+          title={
+            cardType
+              ? `PAY $15.12 WITH ${cardType.toUpperCase()}`
+              : 'PAY $15.12'
+          }
           onPress={formMethods.handleSubmit(onSubmit)}
         />
       </FormProvider>
