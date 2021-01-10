@@ -43,6 +43,7 @@ const FormTextField = React.forwardRef<TextInput, Props>((props, ref) => {
           // to be able to support all TextInput props
           {...restOfProps}
           ref={ref}
+          testID={`TextField.${name}`}
           errorText={errors[name]?.message}
           onBlur={onBlur}
           onChangeText={(text) => {
