@@ -13,8 +13,11 @@
     "test": "jest"
   },
   "dependencies": {
+    "@expo-google-fonts/roboto-mono": "^0.1.0",
     "card-validator": "^8.1.0",
     "expo": "~40.0.0",
+    "expo-app-loading": "^1.0.1",
+    "expo-font": "~8.4.0",
     "expo-status-bar": "~1.0.3",
     "react": "16.13.1",
     "react-dom": "16.13.1",

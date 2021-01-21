@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     padding: 24,
     borderWidth: 1,
     borderRadius: 4,
-    fontFamily: 'Avenir-Medium',
+    fontFamily: 'RobotoMono_400Regular',
     fontSize: 16,
   },
   labelContainer: {
@@ -133,8 +133,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   label: {
-    fontFamily: 'Avenir-Heavy',
-    fontSize: 16,
+    fontFamily: 'RobotoMono_700Bold',
+    fontSize: 14,
   },
   enhancerContainer: {
     position: 'absolute',
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     marginLeft: 12,
     fontSize: 12,
     color: '#B00020',
-    fontFamily: 'Avenir-Medium',
+    fontFamily: 'RobotoMono_400Regular',
   },
 })
 

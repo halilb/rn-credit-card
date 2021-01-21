@@ -17,6 +17,7 @@ const FormTextField = React.forwardRef<TextInput, Props>((props, ref) => {
     rules,
     validationLength = 1,
     formatter,
+    onBlur,
     onValid,
     ...restOfProps
   } = props
@@ -32,12 +33,12 @@ const FormTextField = React.forwardRef<TextInput, Props>((props, ref) => {
     if (value.length >= validationLength) {
       validate()
     }
-  }, [value, name, validationLength, trigger])
+  }, [value, name, validationLength, trigger]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Controller
       control={control}
-      render={({ onChange, onBlur, value }) => (
+      render={({ onChange, onBlur: onBlurLocal, value }) => (
         <TextField
           // passing everything down to TextField
           // to be able to support all TextInput props
@@ -45,7 +46,10 @@ const FormTextField = React.forwardRef<TextInput, Props>((props, ref) => {
           ref={ref}
           testID={`TextField.${name}`}
           errorText={errors[name]?.message}
-          onBlur={onBlur}
+          onBlur={(event) => {
+            onBlurLocal()
+            onBlur?.(event)
+          }}
           onChangeText={(text) => {
             const newValue = formatter ? formatter(value, text) : text
             onChange(newValue)
