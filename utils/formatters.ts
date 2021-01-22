@@ -3,7 +3,7 @@ export function cardNumberFormatter(
   newValue: string,
 ): string {
   // user is deleting so return without formatting
-  if (oldValue.length > newValue.length) {
+  if (oldValue === newValue.slice(0, -1)) {
     return newValue
   }
 
@@ -18,7 +18,7 @@ export function expirationDateFormatter(
   newValue: string,
 ): string {
   // user is deleting so return without formatting
-  if (oldValue.length > newValue.length) {
+  if (oldValue === newValue.slice(0, -1)) {
     return newValue
   }
 
