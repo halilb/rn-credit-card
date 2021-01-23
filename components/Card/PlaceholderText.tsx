@@ -2,20 +2,19 @@ import React from 'react'
 import { Text, StyleSheet, LayoutChangeEvent, ViewStyle } from 'react-native'
 
 type Props = {
-  expiration: string
-  onLayout: (event: LayoutChangeEvent) => void
-  style: ViewStyle
+  value: string
+  placeholder: string
+  onLayout?: (event: LayoutChangeEvent) => void
+  style?: ViewStyle[] | ViewStyle
 }
 
-const PLACEHOLDER = 'MM/YY'
-
-const ExpirationText: React.FC<Props> = (props) => {
-  const { expiration, onLayout, style } = props
-  const rest = PLACEHOLDER.substring(expiration.length)
+const PlaceholderText: React.FC<Props> = (props) => {
+  const { value, placeholder, onLayout, style } = props
+  const rest = placeholder.substring(value.length)
 
   return (
     <Text style={style} numberOfLines={1} onLayout={onLayout}>
-      {expiration}
+      {value}
       <Text style={styles.placeholder}>{rest}</Text>
     </Text>
   )
@@ -27,4 +26,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default ExpirationText
+export default PlaceholderText

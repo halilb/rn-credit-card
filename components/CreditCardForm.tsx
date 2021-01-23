@@ -8,7 +8,8 @@ import {
   expirationDateFormatter,
 } from '../utils/formatters'
 import CardIcon from './CardIcon'
-import { FormCard, CardFields } from './Card/index'
+import { CardFields } from './Card/index'
+import FormCard from './FormCard'
 
 export interface FormModel {
   holderName: string
@@ -135,6 +136,7 @@ const CreditCardForm: React.FC = () => {
             // form is completed so hide the keyboard
             Keyboard.dismiss()
           }}
+          onFocus={() => setFocusedField(CardFields.CVV)}
         />
       </View>
     </View>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { fireEvent, render, waitFor } from '@testing-library/react-native'
 import { def, get } from 'bdd-lazy-var/getter'
-import CreditCardForm from './CreditCardForm'
+import CreditCardForm, { FormModel } from './CreditCardForm'
 import { useForm, FormProvider } from 'react-hook-form'
 import { Button } from 'react-native'
 
@@ -17,7 +17,7 @@ const Wrapper = () => {
   })
   const { handleSubmit } = formMethods
 
-  const onSubmit = (model) => {
+  const onSubmit = (model: FormModel) => {
     get.onSubmit(model)
   }
 

@@ -1,11 +1,9 @@
 import React from 'react'
 import Card from './Card'
-import { CardFields } from './index'
 import { useFormContext } from 'react-hook-form'
 
-type Props = {
-  focusedField: CardFields | null
-}
+type CardProps = React.ComponentProps<typeof Card>
+type Props = Omit<CardProps, 'model'>
 
 const FormCard: React.FC<Props> = ({ focusedField }) => {
   const { watch } = useFormContext()

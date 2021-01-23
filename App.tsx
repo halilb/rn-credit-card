@@ -39,7 +39,10 @@ const App: React.FC = () => {
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.content}>
+    <ScrollView
+      contentContainerStyle={styles.content}
+      keyboardShouldPersistTaps="handled"
+    >
       <FormProvider {...formMethods}>
         <CreditCardForm />
         <Button

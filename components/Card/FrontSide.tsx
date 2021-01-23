@@ -1,26 +1,16 @@
 import React, { useRef, useState, useEffect } from 'react'
-import {
-  Animated,
-  Image,
-  LayoutRectangle,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native'
+import { Animated, LayoutRectangle, StyleSheet, Text, View } from 'react-native'
 import { FormModel } from '../CreditCardForm'
 import { CardFields } from './index'
-import NumberText from './NumberText'
-import ExpirationText from './ExpirationText'
+import CardIcon from '../CardIcon'
+import PlaceholderText from './PlaceholderText'
 
 type Props = {
   model: FormModel
   focusedField: CardFields | null
 }
 
-const background = require('../../assets/background.png')
-const mastercard = require('../../assets/mastercard.png')
-
-const Card: React.FC<Props> = ({ model, focusedField }) => {
+const FrontSide: React.FC<Props> = ({ model, focusedField }) => {
   const [numberLayout, setNumberLayout] = useState<LayoutRectangle | null>(null)
   const [nameLayout, setNameLayout] = useState<LayoutRectangle | null>(null)
   const [
@@ -67,13 +57,14 @@ const Card: React.FC<Props> = ({ model, focusedField }) => {
   ])
 
   return (
-    <View style={styles.container}>
-      <Image style={styles.background} source={background} />
+    <>
       <View style={styles.header}>
-        <Image style={styles.icon} source={mastercard} />
+        <CardIcon cardNumber={model.cardNumber} />
       </View>
-      <NumberText
-        cardNumber={model.cardNumber}
+      <PlaceholderText
+        style={styles.numberText}
+        value={model.cardNumber}
+        placeholder="XXXX XXXX XXXX XXXX"
         onLayout={({ nativeEvent }) => setNumberLayout(nativeEvent.layout)}
       />
       <View style={styles.labelContainer}>
@@ -81,15 +72,22 @@ const Card: React.FC<Props> = ({ model, focusedField }) => {
         <Text style={styles.labelText}>Expires</Text>
       </View>
       <Text
-        style={[styles.bottomText, styles.nameText]}
+        style={[
+          styles.bottomText,
+          styles.nameText,
+          {
+            color: model.holderName ? 'white' : 'gray',
+          },
+        ]}
         numberOfLines={1}
         onLayout={({ nativeEvent }) => setNameLayout(nativeEvent.layout)}
       >
         {model.holderName.toUpperCase() || 'NAME SURNAME'}
       </Text>
-      <ExpirationText
+      <PlaceholderText
         style={[styles.bottomText, styles.expirationText]}
-        expiration={model.expiration}
+        value={model.expiration}
+        placeholder="MM/YY"
         onLayout={({ nativeEvent }) => setExpirationLayout(nativeEvent.layout)}
       />
       <Animated.View
@@ -103,37 +101,29 @@ const Card: React.FC<Props> = ({ model, focusedField }) => {
           },
         ]}
       />
-    </View>
+    </>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    height: 200,
-    padding: 24,
-    paddingTop: 0,
-    backgroundColor: '#38393A',
-    borderRadius: 12,
-    overflow: 'hidden',
-  },
-  background: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    borderRadius: 12,
-  },
   header: {
     flex: 1,
     alignItems: 'flex-end',
+  },
+  numberText: {
+    position: 'absolute',
+    top: '45%',
+    left: 24,
+    color: 'white',
+    fontSize: 22,
+    letterSpacing: 2,
+    lineHeight: 36,
+    fontFamily: 'RobotoMono_700Bold',
   },
   bottomText: {
     position: 'absolute',
     bottom: 24,
     fontSize: 12,
-    color: 'white',
     letterSpacing: 2,
     fontFamily: 'RobotoMono_700Bold',
     alignSelf: 'flex-start',
@@ -176,4 +166,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default Card
+export default FrontSide
