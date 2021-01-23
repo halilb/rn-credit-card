@@ -24,7 +24,6 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   text: {
-    flex: 1,
     color: 'white',
     fontFamily: 'Avenir-Black',
     fontSize: 16,

@@ -24,7 +24,7 @@ const BackSide: React.FC<Props> = ({ model }) => {
           />
         </View>
       </View>
-      <View style={styles.header}>
+      <View style={styles.footer}>
         <CardIcon cardNumber={model.cardNumber} />
       </View>
     </>
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     height: 48,
     width: '100%',
     backgroundColor: 'black',
-    marginBottom: 16,
+    marginVertical: 24,
   },
   tape: {
     width: '70%',
@@ -60,13 +60,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 4,
     paddingVertical: 2,
   },
-  header: {
-    flex: 1,
-    alignItems: 'flex-end',
-  },
-  icon: {
-    width: 48,
-    height: 48,
+  footer: {
+    position: 'absolute',
+    bottom: 12,
+    right: 12,
   },
 })
 

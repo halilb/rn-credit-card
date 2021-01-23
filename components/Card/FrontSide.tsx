@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   },
   numberText: {
     position: 'absolute',
-    top: '45%',
+    top: '40%',
     left: 24,
     color: 'white',
     fontSize: 22,
@@ -125,6 +125,7 @@ const styles = StyleSheet.create({
     bottom: 24,
     fontSize: 12,
     letterSpacing: 2,
+    color: 'white',
     fontFamily: 'RobotoMono_700Bold',
     alignSelf: 'flex-start',
   },
@@ -151,10 +152,6 @@ const styles = StyleSheet.create({
     fontFamily: 'RobotoMono_400Regular',
     color: 'white',
     letterSpacing: 1,
-  },
-  icon: {
-    width: 48,
-    height: 48,
   },
   outline: {
     position: 'absolute',

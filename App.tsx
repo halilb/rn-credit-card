@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
-import { Alert, StyleSheet, ScrollView } from 'react-native'
+import { Alert, StyleSheet, ScrollView, View } from 'react-native'
 import AppLoading from 'expo-app-loading'
 import {
   useFonts,
@@ -39,28 +39,29 @@ const App: React.FC = () => {
   }
 
   return (
-    <ScrollView
-      contentContainerStyle={styles.content}
-      keyboardShouldPersistTaps="handled"
-    >
-      <FormProvider {...formMethods}>
-        <CreditCardForm />
-        <Button
-          title={
-            cardType
-              ? `PAY $15.12 WITH ${cardType.toUpperCase()}`
-              : 'PAY $15.12'
+    <FormProvider {...formMethods}>
+      <View style={styles.container}>
+        <CreditCardForm
+          button={
+            <Button
+              title={
+                cardType
+                  ? `PAY $15.12 WITH ${cardType.toUpperCase()}`
+                  : 'PAY $15.12'
+              }
+              onPress={formMethods.handleSubmit(onSubmit)}
+            />
           }
-          onPress={formMethods.handleSubmit(onSubmit)}
         />
-      </FormProvider>
-    </ScrollView>
+      </View>
+    </FormProvider>
   )
 }
 
 const styles = StyleSheet.create({
-  content: {
-    paddingTop: 96,
+  container: {
+    flex: 1,
+    paddingVertical: 60,
     paddingHorizontal: 36,
   },
 })
