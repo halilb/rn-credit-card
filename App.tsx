@@ -42,6 +42,7 @@ const App: React.FC = () => {
     <FormProvider {...formMethods}>
       <View style={styles.container}>
         <CreditCardForm
+          useLottie
           button={
             <Button
               title={

@@ -1,73 +1,86 @@
-import React, { useEffect, useRef } from 'react'
-import { Image, StyleSheet } from 'react-native'
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
+import { Image, StyleSheet, NativeModules } from 'react-native'
 import cardValidator from 'card-validator'
-import LottieView from 'lottie-react-native'
-
-const VISA = require('./visa.png')
-const MASTERCARD = require('./mastercard.png')
-const AMEX = require('./amex.png')
-const DISCOVER = require('./discover.png')
-
-const mastercardJson = require('./mastercard.json')
-const visaJson = require('./visa.json')
-const discoverJson = require('./discover.json')
-const amexJson = require('./amex.json')
-const amexBlueJson = require('./amexBlue.json')
+import LibraryContext from '../../LibraryContext'
 
 type Props = {
   cardNumber: string
 }
 
+type Card = {
+  icon: number
+  animation: any
+  alternativeAnimation?: any
+}
+
+const CARDS: Record<string, Card> = {
+  visa: {
+    icon: require('./icons/visa.png'),
+    animation: require('./lottie/visa.json'),
+  },
+  mastercard: {
+    icon: require('./icons/mastercard.png'),
+    animation: require('./lottie/mastercard.json'),
+  },
+  amex: {
+    icon: require('./icons/amex.png'),
+    animation: require('./lottie/amex.json'),
+    alternativeAnimation: require('./lottie/amexBlue.json'),
+  },
+  discover: {
+    icon: require('./icons/discover.png'),
+    animation: require('./lottie/discover.json'),
+  },
+}
+
 const CardIcon: React.FC<Props> = (props) => {
+  const { useLottie } = useContext(LibraryContext)
   const { cardNumber } = props
   const { card } = cardValidator.number(cardNumber)
 
-  const animRef = useRef()
+  // use a local state to prevent repetitive require calls
+  const [LottieView] = useState(() => {
+    if (!useLottie) return null
+    return require('lottie-react-native')
+  })
 
-  let source
-  switch (card?.type) {
-    case 'visa':
-      source = VISA
-      break
-    case 'mastercard':
-      source = MASTERCARD
-      break
-    case 'discover':
-      source = DISCOVER
-      break
-    case 'american-express':
-      source = AMEX
-      break
-    default:
-      break
+  const animRef = useCallback((node) => {
+    if (node !== null) {
+      node.play()
+    }
+  }, [])
+  const data: Card = CARDS[card?.type || -1]
+
+  if (!data) return null
+
+  if (!LottieView) {
+    return <Image style={styles.icon} source={data.icon} />
   }
 
-  useEffect(() => {
-    if (source && animRef.current) {
-      animRef.current.play()
-    }
-  }, [source])
-
-  if (!source) return null
-
-  //return <Image style={styles.image} source={source} />
   return (
     <LottieView
       ref={animRef}
-      style={{
-        width: 36,
-        height: 36,
-      }}
-      source={mastercardJson}
+      style={styles.lottie}
+      source={data.animation}
       loop={false}
     />
   )
 }
 
 const styles = StyleSheet.create({
-  image: {
+  icon: {
     width: 48,
     height: 48,
+  },
+  lottie: {
+    width: 36,
+    height: 36,
   },
 })
 

@@ -7,13 +7,10 @@ import {
   cardNumberFormatter,
   expirationDateFormatter,
 } from '../utils/formatters'
+import LibraryContext, { LibraryProps } from '../LibraryContext'
 import CardIcon from './CardIcon'
 import { CardFields } from './Card/index'
 import FormCard from './FormCard'
-
-type Props = {
-  button?: React.ReactNode
-}
 
 export interface FormModel {
   holderName: string
@@ -22,7 +19,7 @@ export interface FormModel {
   cvv: string
 }
 
-const CreditCardForm: React.FC<Props> = ({ button }) => {
+const CreditCardForm: React.FC<LibraryProps> = (props) => {
   const { getValues, watch } = useFormContext()
   const cardNumber = watch('cardNumber')
 
@@ -40,114 +37,118 @@ const CreditCardForm: React.FC<Props> = ({ button }) => {
   }, [cardNumberRef])
 
   return (
-    <View style={styles.container}>
-      <FormCard focusedField={focusedField} />
-      <ScrollView keyboardShouldPersistTaps="handled">
-        <FormTextField
-          style={styles.textField}
-          ref={cardNumberRef}
-          name="cardNumber"
-          label="Card Number"
-          keyboardType="number-pad"
-          maxLength={19}
-          validationLength={19}
-          rules={{
-            required: 'Card number is required.',
-            validate: {
-              isValid: (value: string) => {
-                return (
-                  cardValidator.number(value).isValid ||
-                  'This card number looks invalid.'
-                )
-              },
-            },
-          }}
-          formatter={cardNumberFormatter}
-          endEnhancer={<CardIcon cardNumber={cardNumber} />}
-          onValid={() => holderNameRef.current?.focus()}
-          onFocus={() => setFocusedField(CardFields.CardNumber)}
-        />
-        <FormTextField
-          style={styles.textField}
-          ref={holderNameRef}
-          name="holderName"
-          label="Cardholder Name"
-          rules={{
-            required: 'Cardholder name is required.',
-            validate: {
-              isValid: (value: string) => {
-                return (
-                  cardValidator.cardholderName(value).isValid ||
-                  'Cardholder name looks invalid.'
-                )
-              },
-            },
-          }}
-          onSubmitEditing={() => expirationRef.current?.focus()}
-          onFocus={() => setFocusedField(CardFields.CardHolderName)}
-        />
-        <View style={styles.row}>
+    <LibraryContext.Provider value={props}>
+      <View style={styles.container}>
+        <FormCard focusedField={focusedField} />
+        <ScrollView keyboardShouldPersistTaps="handled">
           <FormTextField
-            style={[
-              styles.textField,
-              {
-                marginRight: 24,
-              },
-            ]}
-            ref={expirationRef}
-            name="expiration"
-            label="Expiration"
+            style={styles.textField}
+            ref={cardNumberRef}
+            name="cardNumber"
+            label="Card Number"
             keyboardType="number-pad"
-            maxLength={5}
-            validationLength={5}
+            maxLength={19}
+            validationLength={19}
             rules={{
-              required: 'Expiration date is required.',
+              required: 'Card number is required.',
               validate: {
                 isValid: (value: string) => {
                   return (
-                    cardValidator.expirationDate(value).isValid ||
-                    'This expiration date looks invalid.'
+                    cardValidator.number(value).isValid ||
+                    'This card number looks invalid.'
                   )
                 },
               },
             }}
-            formatter={expirationDateFormatter}
-            onValid={() => cvvRef.current?.focus()}
-            onFocus={() => setFocusedField(CardFields.Expiration)}
+            formatter={cardNumberFormatter}
+            endEnhancer={<CardIcon cardNumber={cardNumber} />}
+            onValid={() => holderNameRef.current?.focus()}
+            onFocus={() => setFocusedField(CardFields.CardNumber)}
           />
           <FormTextField
             style={styles.textField}
-            ref={cvvRef}
-            name="cvv"
-            label="Security Code"
-            keyboardType="number-pad"
-            maxLength={4}
-            validationLength={3}
+            ref={holderNameRef}
+            name="holderName"
+            label="Cardholder Name"
             rules={{
-              required: 'Security code is required.',
+              required: 'Cardholder name is required.',
               validate: {
                 isValid: (value: string) => {
-                  const { card } = cardValidator.number(getValues('cardNumber'))
-                  const cvvLength = card?.type === 'american-express' ? 4 : 3
-
                   return (
-                    cardValidator.cvv(value, cvvLength).isValid ||
-                    'This security code looks invalid.'
+                    cardValidator.cardholderName(value).isValid ||
+                    'Cardholder name looks invalid.'
                   )
                 },
               },
             }}
-            onValid={() => {
-              // form is completed so hide the keyboard
-              Keyboard.dismiss()
-              setFocusedField(null)
-            }}
-            onFocus={() => setFocusedField(CardFields.CVV)}
+            onSubmitEditing={() => expirationRef.current?.focus()}
+            onFocus={() => setFocusedField(CardFields.CardHolderName)}
           />
-        </View>
-        {button}
-      </ScrollView>
-    </View>
+          <View style={styles.row}>
+            <FormTextField
+              style={[
+                styles.textField,
+                {
+                  marginRight: 24,
+                },
+              ]}
+              ref={expirationRef}
+              name="expiration"
+              label="Expiration"
+              keyboardType="number-pad"
+              maxLength={5}
+              validationLength={5}
+              rules={{
+                required: 'Expiration date is required.',
+                validate: {
+                  isValid: (value: string) => {
+                    return (
+                      cardValidator.expirationDate(value).isValid ||
+                      'This expiration date looks invalid.'
+                    )
+                  },
+                },
+              }}
+              formatter={expirationDateFormatter}
+              onValid={() => cvvRef.current?.focus()}
+              onFocus={() => setFocusedField(CardFields.Expiration)}
+            />
+            <FormTextField
+              style={styles.textField}
+              ref={cvvRef}
+              name="cvv"
+              label="Security Code"
+              keyboardType="number-pad"
+              maxLength={4}
+              validationLength={3}
+              rules={{
+                required: 'Security code is required.',
+                validate: {
+                  isValid: (value: string) => {
+                    const { card } = cardValidator.number(
+                      getValues('cardNumber'),
+                    )
+                    const cvvLength = card?.type === 'american-express' ? 4 : 3
+
+                    return (
+                      cardValidator.cvv(value, cvvLength).isValid ||
+                      'This security code looks invalid.'
+                    )
+                  },
+                },
+              }}
+              onValid={() => {
+                // form is completed so hide the keyboard
+                Keyboard.dismiss()
+                setFocusedField(null)
+              }}
+              onFocus={() => setFocusedField(CardFields.CVV)}
+            />
+          </View>
+          {props.button}
+        </ScrollView>
+      </View>
+    </LibraryContext.Provider>
   )
 }
 
