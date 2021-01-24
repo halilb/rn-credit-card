@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
   },
   enhancerContainer: {
     position: 'absolute',
-    top: 12,
+    top: 16,
     right: 16,
   },
   error: {

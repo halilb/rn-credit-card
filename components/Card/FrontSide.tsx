@@ -109,6 +109,7 @@ const styles = StyleSheet.create({
   header: {
     flex: 1,
     alignItems: 'flex-end',
+    margin: 8,
   },
   numberText: {
     position: 'absolute',
