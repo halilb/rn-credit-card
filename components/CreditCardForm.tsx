@@ -11,6 +11,8 @@ import LibraryContext, { LibraryProps } from '../LibraryContext'
 import CardIcon from './CardIcon'
 import { CardFields } from './Card/index'
 import FormCard from './FormCard'
+import Button from './Button'
+import Conditional from './Conditional'
 
 export interface FormModel {
   holderName: string
@@ -20,9 +22,12 @@ export interface FormModel {
 }
 
 const CreditCardForm: React.FC<LibraryProps> = (props) => {
-  const { getValues, watch } = useFormContext()
+  const { getValues, trigger, watch } = useFormContext()
   const cardNumber = watch('cardNumber')
 
+  const [isHorizontal, setIsHorizontal] = useState(true)
+
+  const scrollRef = useRef<ScrollView>(null)
   const holderNameRef = useRef<TextInput>(null)
   const cardNumberRef = useRef<TextInput>(null)
   const expirationRef = useRef<TextInput>(null)
@@ -36,13 +41,50 @@ const CreditCardForm: React.FC<LibraryProps> = (props) => {
     }
   }, [cardNumberRef])
 
+  const textFieldStyle = isHorizontal ? styles.textField : styles.regularField
+
+  console.log({ isHorizontal })
+
+  async function goNext() {
+    if (focusedField === null) return
+
+    const field = ['cardNumber', 'holderName', 'expiration', 'cvv'][
+      focusedField
+    ]
+
+    if (isHorizontal) {
+      const result = await trigger(field)
+      if (!result) return
+      scrollRef.current?.scrollTo({ x: (focusedField + 1) * 342 })
+    }
+
+    if (focusedField === CardFields.CVV) {
+      setFocusedField(null)
+      setIsHorizontal(false)
+      Keyboard.dismiss()
+      return
+    }
+
+    const ref = [cardNumberRef, holderNameRef, expirationRef, cvvRef][
+      focusedField + 1
+    ]
+    ref.current?.focus()
+  }
+
   return (
     <LibraryContext.Provider value={props}>
       <View style={styles.container}>
         <FormCard focusedField={focusedField} />
-        <ScrollView keyboardShouldPersistTaps="handled">
+        <ScrollView
+          ref={scrollRef}
+          style={isHorizontal && { maxHeight: 120 }}
+          pagingEnabled={isHorizontal}
+          horizontal={isHorizontal}
+          scrollEnabled={!isHorizontal}
+          keyboardShouldPersistTaps="handled"
+        >
           <FormTextField
-            style={styles.textField}
+            style={textFieldStyle}
             ref={cardNumberRef}
             name="cardNumber"
             label="Card Number"
@@ -62,11 +104,11 @@ const CreditCardForm: React.FC<LibraryProps> = (props) => {
             }}
             formatter={cardNumberFormatter}
             endEnhancer={<CardIcon cardNumber={cardNumber} />}
-            onValid={() => holderNameRef.current?.focus()}
             onFocus={() => setFocusedField(CardFields.CardNumber)}
+            onValid={goNext}
           />
           <FormTextField
-            style={styles.textField}
+            style={textFieldStyle}
             ref={holderNameRef}
             name="holderName"
             label="Cardholder Name"
@@ -81,15 +123,15 @@ const CreditCardForm: React.FC<LibraryProps> = (props) => {
                 },
               },
             }}
-            onSubmitEditing={() => expirationRef.current?.focus()}
+            onSubmitEditing={goNext}
             onFocus={() => setFocusedField(CardFields.CardHolderName)}
           />
           <View style={styles.row}>
             <FormTextField
               style={[
-                styles.textField,
+                textFieldStyle,
                 {
-                  marginRight: 24,
+                  marginRight: isHorizontal ? 0 : 24,
                 },
               ]}
               ref={expirationRef}
@@ -110,11 +152,11 @@ const CreditCardForm: React.FC<LibraryProps> = (props) => {
                 },
               }}
               formatter={expirationDateFormatter}
-              onValid={() => cvvRef.current?.focus()}
               onFocus={() => setFocusedField(CardFields.Expiration)}
+              onValid={goNext}
             />
             <FormTextField
-              style={styles.textField}
+              style={textFieldStyle}
               ref={cvvRef}
               name="cvv"
               label="Security Code"
@@ -137,16 +179,18 @@ const CreditCardForm: React.FC<LibraryProps> = (props) => {
                   },
                 },
               }}
-              onValid={() => {
-                // form is completed so hide the keyboard
-                Keyboard.dismiss()
-                setFocusedField(null)
-              }}
               onFocus={() => setFocusedField(CardFields.CVV)}
+              onValid={goNext}
             />
           </View>
-          {props.button}
         </ScrollView>
+        <Conditional condition={isHorizontal} fallback={props.button}>
+          <Button
+            style={styles.button}
+            title={focusedField === CardFields.CVV ? 'Done' : 'Next'}
+            onPress={goNext}
+          />
+        </Conditional>
       </View>
     </LibraryContext.Provider>
   )
@@ -162,8 +206,22 @@ const styles = StyleSheet.create({
     marginBottom: 36,
   },
   textField: {
+    marginTop: 24,
+    width: 342,
+    height: 100,
+  },
+  regularField: {
     flex: 1,
     marginTop: 24,
+  },
+  button: {
+    width: 100,
+    alignSelf: 'flex-end',
+    borderTopLeftRadius: 32,
+    borderBottomLeftRadius: 32,
+    borderTopRightRadius: 8,
+    borderBottomRightRadius: 24,
+    backgroundColor: '#0093E9',
   },
 })
 

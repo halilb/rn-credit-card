@@ -27,8 +27,6 @@ const App: React.FC = () => {
       cvv: '',
     },
   })
-  const cardNumber = formMethods.watch('cardNumber')
-  const cardType = cardValidator.number(cardNumber).card?.niceType
 
   function onSubmit(model: FormModel) {
     Alert.alert('Success: ' + JSON.stringify(model, null, 2))
@@ -45,11 +43,7 @@ const App: React.FC = () => {
           useLottie
           button={
             <Button
-              title={
-                cardType
-                  ? `PAY $15.12 WITH ${cardType.toUpperCase()}`
-                  : 'PAY $15.12'
-              }
+              title={'CONFIRM'}
               onPress={formMethods.handleSubmit(onSubmit)}
             />
           }
@@ -64,6 +58,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: 60,
     paddingHorizontal: 36,
+    paddingTop: 96,
   },
 })
 
