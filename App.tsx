@@ -1,6 +1,13 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
-import { Alert, StyleSheet, ScrollView, View } from 'react-native'
+import {
+  Alert,
+  StyleSheet,
+  View,
+  KeyboardAvoidingView,
+  Platform,
+  SafeAreaView,
+} from 'react-native'
 import AppLoading from 'expo-app-loading'
 import {
   useFonts,
@@ -26,6 +33,7 @@ const App: React.FC = () => {
       cvv: '',
     },
   })
+  const { handleSubmit, formState } = formMethods
 
   function onSubmit(model: FormModel) {
     Alert.alert('Success: ' + JSON.stringify(model, null, 2))
@@ -37,23 +45,29 @@ const App: React.FC = () => {
 
   return (
     <FormProvider {...formMethods}>
-      <View style={styles.container}>
-        <CreditCardForm
-          useLottie
-          button={
-            <Button
-              title={'CONFIRM PAYMENT'}
-              onPress={formMethods.handleSubmit(onSubmit)}
-            />
-          }
-          horizontalStart={false}
-          overrides={{
-            labelText: {
-              marginTop: 16,
-            },
-          }}
-        />
-      </View>
+      <SafeAreaView style={styles.container}>
+        <KeyboardAvoidingView
+          style={styles.avoider}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        >
+          <CreditCardForm
+            useLottie
+            horizontalStart
+            overrides={{
+              labelText: {
+                marginTop: 16,
+              },
+            }}
+          />
+        </KeyboardAvoidingView>
+        {formState.isValid && (
+          <Button
+            style={styles.button}
+            title={'CONFIRM PAYMENT'}
+            onPress={handleSubmit(onSubmit)}
+          />
+        )}
+      </SafeAreaView>
     </FormProvider>
   )
 }
@@ -61,9 +75,14 @@ const App: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingVertical: 60,
-    paddingHorizontal: 36,
-    paddingTop: 96,
+  },
+  avoider: {
+    flex: 1,
+    padding: 36,
+  },
+  button: {
+    margin: 36,
+    marginTop: 0,
   },
 })
 

@@ -1,5 +1,13 @@
 import React, { useRef, useState, useEffect } from 'react'
-import { Keyboard, ScrollView, StyleSheet, TextInput, View } from 'react-native'
+import {
+  Keyboard,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  useWindowDimensions,
+  View,
+} from 'react-native'
 import { useFormContext } from 'react-hook-form'
 import cardValidator from 'card-validator'
 import FormTextField from './FormTextField'
@@ -35,7 +43,13 @@ const CreditCardForm: React.FC<LibraryProps> = (props) => {
   const isAmex = card?.type === 'american-express'
   const cvvLength = isAmex ? 4 : 3
 
-  const [isHorizontal, setIsHorizontal] = useState(horizontalStart)
+  const [isHorizontal, setIsHorizontal] = useState(
+    horizontalStart && Platform.OS === 'ios',
+  )
+
+  const { width: windowWidth } = useWindowDimensions()
+  // input has 36*2 padding
+  const inputWidth = windowWidth - 72
 
   const scrollRef = useRef<ScrollView>(null)
   const holderNameRef = useRef<TextInput>(null)
@@ -51,7 +65,14 @@ const CreditCardForm: React.FC<LibraryProps> = (props) => {
     }
   }, [cardNumberRef])
 
-  const textFieldStyle = isHorizontal ? styles.textField : styles.regularField
+  const textFieldStyle = isHorizontal
+    ? [
+        styles.textField,
+        {
+          width: inputWidth,
+        },
+      ]
+    : styles.regularField
 
   async function goNext() {
     if (focusedField === null) return
@@ -63,7 +84,7 @@ const CreditCardForm: React.FC<LibraryProps> = (props) => {
     if (isHorizontal) {
       const result = await trigger(field)
       if (!result) return
-      scrollRef.current?.scrollTo({ x: (focusedField + 1) * 342 })
+      scrollRef.current?.scrollTo({ x: (focusedField + 1) * inputWidth })
     }
 
     if (focusedField === CardFields.CVV) {
@@ -137,6 +158,7 @@ const CreditCardForm: React.FC<LibraryProps> = (props) => {
                 },
               },
             }}
+            autoCorrect={false}
             onSubmitEditing={goNext}
             onFocus={() => setFocusedField(CardFields.CardHolderName)}
           />
@@ -220,7 +242,6 @@ const styles = StyleSheet.create({
   },
   textField: {
     marginTop: 24,
-    width: 342,
     height: 100,
   },
   regularField: {

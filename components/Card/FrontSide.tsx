@@ -1,5 +1,12 @@
 import React, { useRef, useState, useEffect, useContext } from 'react'
-import { Animated, LayoutRectangle, StyleSheet, Text, View } from 'react-native'
+import {
+  Animated,
+  LayoutRectangle,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+  View,
+} from 'react-native'
 import { FormModel } from '../CreditCardForm'
 import { CardFields } from './index'
 import CardIcon from '../CardIcon'
@@ -20,6 +27,7 @@ const FrontSide: React.FC<Props> = ({ model, cardType, focusedField }) => {
     expirationLayout,
     setExpirationLayout,
   ] = useState<LayoutRectangle | null>(null)
+  const { width: windowWidth } = useWindowDimensions()
 
   const positionAnim = useRef(new Animated.ValueXY()).current
   const sizeAnim = useRef(new Animated.ValueXY()).current
@@ -59,13 +67,21 @@ const FrontSide: React.FC<Props> = ({ model, cardType, focusedField }) => {
     positionAnim,
   ])
 
+  console.log({ windowWidth })
+
   return (
     <>
       <View style={styles.header}>
         <CardIcon cardNumber={model.cardNumber} />
       </View>
       <PlaceholderText
-        style={[styles.numberText, overrides.cardPreview]}
+        style={[
+          styles.numberText,
+          {
+            fontSize: windowWidth < 390 ? 20 : 22,
+          },
+          overrides.cardPreview,
+        ]}
         value={model.cardNumber}
         placeholder={
           cardType === 'american-express'
@@ -133,7 +149,6 @@ const styles = StyleSheet.create({
     top: '40%',
     left: 24,
     color: 'white',
-    fontSize: 22,
     letterSpacing: 2,
     lineHeight: 36,
     fontFamily: 'RobotoMono_700Bold',

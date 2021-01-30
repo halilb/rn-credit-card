@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: 'white',
-    fontFamily: 'Avenir-Black',
+    fontFamily: 'RobotoMono_400Regular',
     fontSize: 16,
   },
 })

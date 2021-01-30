@@ -55,10 +55,13 @@ export type LibraryProps = {
 }
 export type ContextProps = LibraryProps & {
   translations: TranslationsNonNull
+  overrides: Overrides
 }
 
 const LibraryContext = createContext<ContextProps>({
+  // iOS only
   useLottie: true,
+  // iOS only
   horizontalStart: true,
   overrides: {},
   inputColors: {},
