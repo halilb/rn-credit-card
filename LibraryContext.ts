@@ -48,13 +48,13 @@ export type LibraryProps = {
   useLottie?: boolean
   horizontalStart?: boolean
   button?: React.ReactNode
+  backgroundImage?: React.ReactNode
   translations?: Translations
   inputColors?: InputColors
   overrides?: Overrides
 }
 export type ContextProps = LibraryProps & {
   translations: TranslationsNonNull
-  overrides: Overrides
 }
 
 const LibraryContext = createContext<ContextProps>({

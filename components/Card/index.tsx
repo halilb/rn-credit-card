@@ -1,6 +1,7 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import { Image, StyleSheet, View } from 'react-native'
 import FlipCard from 'react-native-card-flip'
+import LibraryContext from '../../LibraryContext'
 
 import { FormModel } from '../CreditCardForm'
 import BackSide from './BackSide'
@@ -30,6 +31,7 @@ function usePrevious(value: any) {
 const background = require('../../assets/background.png')
 
 const Card: React.FC<Props> = ({ model, cardType, focusedField }) => {
+  const { backgroundImage } = useContext(LibraryContext)
   const previousFocused = usePrevious(focusedField)
   const cardRef = useRef<FlipCard>()
 
@@ -49,7 +51,9 @@ const Card: React.FC<Props> = ({ model, cardType, focusedField }) => {
       {/* @ts-ignore */}
       <FlipCard style={styles.container} ref={cardRef}>
         <>
-          <Image style={styles.background} source={background} />
+          {backgroundImage || (
+            <Image style={styles.background} source={background} />
+          )}
           <FrontSide
             model={model}
             cardType={cardType}
@@ -57,7 +61,9 @@ const Card: React.FC<Props> = ({ model, cardType, focusedField }) => {
           />
         </>
         <>
-          <Image style={styles.background} source={background} />
+          {backgroundImage || (
+            <Image style={styles.background} source={background} />
+          )}
           <BackSide model={model} cardType={cardType} />
         </>
       </FlipCard>
