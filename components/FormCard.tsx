@@ -5,12 +5,13 @@ import { useFormContext } from 'react-hook-form'
 type CardProps = React.ComponentProps<typeof Card>
 type Props = Omit<CardProps, 'model'>
 
-const FormCard: React.FC<Props> = ({ focusedField }) => {
+const FormCard: React.FC<Props> = ({ cardType, focusedField }) => {
   const { watch } = useFormContext()
   const model = watch()
 
   return (
     <Card
+      cardType={cardType}
       focusedField={focusedField}
       model={{
         cardNumber: model.cardNumber,

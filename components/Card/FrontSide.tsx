@@ -7,10 +7,11 @@ import PlaceholderText from './PlaceholderText'
 
 type Props = {
   model: FormModel
+  cardType?: string
   focusedField: CardFields | null
 }
 
-const FrontSide: React.FC<Props> = ({ model, focusedField }) => {
+const FrontSide: React.FC<Props> = ({ model, cardType, focusedField }) => {
   const [numberLayout, setNumberLayout] = useState<LayoutRectangle | null>(null)
   const [nameLayout, setNameLayout] = useState<LayoutRectangle | null>(null)
   const [
@@ -64,7 +65,11 @@ const FrontSide: React.FC<Props> = ({ model, focusedField }) => {
       <PlaceholderText
         style={styles.numberText}
         value={model.cardNumber}
-        placeholder="XXXX XXXX XXXX XXXX"
+        placeholder={
+          cardType === 'american-express'
+            ? 'XXXX XXXXXX XXXXX'
+            : 'XXXX XXXX XXXX XXXX'
+        }
         onLayout={({ nativeEvent }) => setNumberLayout(nativeEvent.layout)}
       />
       <View style={styles.labelContainer}>

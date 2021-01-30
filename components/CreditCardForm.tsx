@@ -22,8 +22,11 @@ export interface FormModel {
 }
 
 const CreditCardForm: React.FC<LibraryProps> = (props) => {
-  const { getValues, trigger, watch } = useFormContext()
+  const { trigger, watch } = useFormContext()
   const cardNumber = watch('cardNumber')
+  const { card } = cardValidator.number(cardNumber)
+  const isAmex = card?.type === 'american-express'
+  const cvvLength = isAmex ? 4 : 3
 
   const [isHorizontal, setIsHorizontal] = useState(true)
 
@@ -42,8 +45,6 @@ const CreditCardForm: React.FC<LibraryProps> = (props) => {
   }, [cardNumberRef])
 
   const textFieldStyle = isHorizontal ? styles.textField : styles.regularField
-
-  console.log({ isHorizontal })
 
   async function goNext() {
     if (focusedField === null) return
@@ -74,7 +75,7 @@ const CreditCardForm: React.FC<LibraryProps> = (props) => {
   return (
     <LibraryContext.Provider value={props}>
       <View style={styles.container}>
-        <FormCard focusedField={focusedField} />
+        <FormCard cardType={card?.type} focusedField={focusedField} />
         <ScrollView
           ref={scrollRef}
           style={isHorizontal && { maxHeight: 120 }}
@@ -90,7 +91,7 @@ const CreditCardForm: React.FC<LibraryProps> = (props) => {
             label="Card Number"
             keyboardType="number-pad"
             maxLength={19}
-            validationLength={19}
+            validationLength={isAmex ? 18 : 19}
             rules={{
               required: 'Card number is required.',
               validate: {
@@ -161,17 +162,12 @@ const CreditCardForm: React.FC<LibraryProps> = (props) => {
               name="cvv"
               label="Security Code"
               keyboardType="number-pad"
-              maxLength={4}
-              validationLength={3}
+              maxLength={cvvLength}
+              validationLength={cvvLength}
               rules={{
                 required: 'Security code is required.',
                 validate: {
                   isValid: (value: string) => {
-                    const { card } = cardValidator.number(
-                      getValues('cardNumber'),
-                    )
-                    const cvvLength = card?.type === 'american-express' ? 4 : 3
-
                     return (
                       cardValidator.cvv(value, cvvLength).isValid ||
                       'This security code looks invalid.'

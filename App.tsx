@@ -8,7 +8,6 @@ import {
   RobotoMono_700Bold,
 } from '@expo-google-fonts/roboto-mono'
 
-import cardValidator from 'card-validator'
 import Button from './components/Button'
 import CreditCardForm, { FormModel } from './components/CreditCardForm'
 
@@ -43,7 +42,7 @@ const App: React.FC = () => {
           useLottie
           button={
             <Button
-              title={'CONFIRM'}
+              title={'CONFIRM PAYMENT'}
               onPress={formMethods.handleSubmit(onSubmit)}
             />
           }

@@ -15,6 +15,7 @@ export enum CardFields {
 
 type Props = {
   focusedField: CardFields | null
+  cardType?: string
   model: FormModel
 }
 
@@ -28,7 +29,7 @@ function usePrevious(value: any) {
 
 const background = require('../../assets/background.png')
 
-const Card: React.FC<Props> = ({ model, focusedField }) => {
+const Card: React.FC<Props> = ({ model, cardType, focusedField }) => {
   const previousFocused = usePrevious(focusedField)
   const cardRef = useRef<FlipCard>()
 
@@ -49,11 +50,15 @@ const Card: React.FC<Props> = ({ model, focusedField }) => {
       <FlipCard style={styles.container} ref={cardRef}>
         <>
           <Image style={styles.background} source={background} />
-          <FrontSide model={model} focusedField={focusedField} />
+          <FrontSide
+            model={model}
+            cardType={cardType}
+            focusedField={focusedField}
+          />
         </>
         <>
           <Image style={styles.background} source={background} />
-          <BackSide model={model} />
+          <BackSide model={model} cardType={cardType} />
         </>
       </FlipCard>
     </>

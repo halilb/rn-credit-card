@@ -6,11 +6,12 @@ import PlaceholderText from './PlaceholderText'
 
 type Props = {
   model: FormModel
+  cardType?: string
 }
 
 const tape = require('../../assets/tape.png')
 
-const BackSide: React.FC<Props> = ({ model }) => {
+const BackSide: React.FC<Props> = ({ model, cardType }) => {
   return (
     <>
       <View style={styles.black} />
@@ -20,7 +21,7 @@ const BackSide: React.FC<Props> = ({ model }) => {
           <PlaceholderText
             style={styles.cvvText}
             value={model.cvv}
-            placeholder="XXX"
+            placeholder={cardType === 'american-express' ? 'XXXX' : 'XXX'}
           />
         </View>
       </View>

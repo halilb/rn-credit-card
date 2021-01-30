@@ -28,7 +28,7 @@ const CARDS: Record<string, Card> = {
     icon: require('./icons/mastercard.png'),
     animation: require('./lottie/mastercard.json'),
   },
-  amex: {
+  'american-express': {
     icon: require('./icons/amex.png'),
     animation: require('./lottie/amex.json'),
     alternativeAnimation: require('./lottie/amexBlue.json'),
