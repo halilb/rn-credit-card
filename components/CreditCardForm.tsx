@@ -7,7 +7,10 @@ import {
   cardNumberFormatter,
   expirationDateFormatter,
 } from '../utils/formatters'
-import LibraryContext, { LibraryProps } from '../LibraryContext'
+import LibraryContext, {
+  getTranslations,
+  LibraryProps,
+} from '../LibraryContext'
 import CardIcon from './CardIcon'
 import { CardFields } from './Card/index'
 import FormCard from './FormCard'
@@ -22,6 +25,7 @@ export interface FormModel {
 }
 
 const CreditCardForm: React.FC<LibraryProps> = (props) => {
+  const translations = getTranslations(props.translations)
   const { trigger, watch } = useFormContext()
   const cardNumber = watch('cardNumber')
   const { card } = cardValidator.number(cardNumber)
@@ -73,7 +77,12 @@ const CreditCardForm: React.FC<LibraryProps> = (props) => {
   }
 
   return (
-    <LibraryContext.Provider value={props}>
+    <LibraryContext.Provider
+      value={{
+        ...props,
+        translations,
+      }}
+    >
       <View style={styles.container}>
         <FormCard cardType={card?.type} focusedField={focusedField} />
         <ScrollView
@@ -88,17 +97,17 @@ const CreditCardForm: React.FC<LibraryProps> = (props) => {
             style={textFieldStyle}
             ref={cardNumberRef}
             name="cardNumber"
-            label="Card Number"
+            label={translations.cardNumber}
             keyboardType="number-pad"
             maxLength={19}
             validationLength={isAmex ? 18 : 19}
             rules={{
-              required: 'Card number is required.',
+              required: translations.cardNumberRequired,
               validate: {
                 isValid: (value: string) => {
                   return (
                     cardValidator.number(value).isValid ||
-                    'This card number looks invalid.'
+                    translations.cardNumberInvalid
                   )
                 },
               },
@@ -112,14 +121,14 @@ const CreditCardForm: React.FC<LibraryProps> = (props) => {
             style={textFieldStyle}
             ref={holderNameRef}
             name="holderName"
-            label="Cardholder Name"
+            label={translations.cardHolderName}
             rules={{
-              required: 'Cardholder name is required.',
+              required: translations.cardNumberRequired,
               validate: {
                 isValid: (value: string) => {
                   return (
                     cardValidator.cardholderName(value).isValid ||
-                    'Cardholder name looks invalid.'
+                    translations.cardNumberInvalid
                   )
                 },
               },
@@ -137,17 +146,17 @@ const CreditCardForm: React.FC<LibraryProps> = (props) => {
               ]}
               ref={expirationRef}
               name="expiration"
-              label="Expiration"
+              label={translations.expiration}
               keyboardType="number-pad"
               maxLength={5}
               validationLength={5}
               rules={{
-                required: 'Expiration date is required.',
+                required: translations.expirationRequired,
                 validate: {
                   isValid: (value: string) => {
                     return (
                       cardValidator.expirationDate(value).isValid ||
-                      'This expiration date looks invalid.'
+                      translations.expirationInvalid
                     )
                   },
                 },
@@ -183,7 +192,11 @@ const CreditCardForm: React.FC<LibraryProps> = (props) => {
         <Conditional condition={isHorizontal} fallback={props.button}>
           <Button
             style={styles.button}
-            title={focusedField === CardFields.CVV ? 'Done' : 'Next'}
+            title={
+              focusedField === CardFields.CVV
+                ? translations.done
+                : translations.next
+            }
             onPress={goNext}
           />
         </Conditional>

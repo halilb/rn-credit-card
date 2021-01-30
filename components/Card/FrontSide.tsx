@@ -1,9 +1,10 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useRef, useState, useEffect, useContext } from 'react'
 import { Animated, LayoutRectangle, StyleSheet, Text, View } from 'react-native'
 import { FormModel } from '../CreditCardForm'
 import { CardFields } from './index'
 import CardIcon from '../CardIcon'
 import PlaceholderText from './PlaceholderText'
+import LibraryContext from '../../LibraryContext'
 
 type Props = {
   model: FormModel
@@ -12,6 +13,7 @@ type Props = {
 }
 
 const FrontSide: React.FC<Props> = ({ model, cardType, focusedField }) => {
+  const { translations } = useContext(LibraryContext)
   const [numberLayout, setNumberLayout] = useState<LayoutRectangle | null>(null)
   const [nameLayout, setNameLayout] = useState<LayoutRectangle | null>(null)
   const [
@@ -73,8 +75,10 @@ const FrontSide: React.FC<Props> = ({ model, cardType, focusedField }) => {
         onLayout={({ nativeEvent }) => setNumberLayout(nativeEvent.layout)}
       />
       <View style={styles.labelContainer}>
-        <Text style={styles.labelText}>CARDHOLDER NAME</Text>
-        <Text style={styles.labelText}>Expires</Text>
+        <Text style={styles.labelText}>
+          {translations.cardHolderName.toUpperCase()}
+        </Text>
+        <Text style={styles.labelText}>{translations.expiration}</Text>
       </View>
       <Text
         style={[
@@ -87,12 +91,12 @@ const FrontSide: React.FC<Props> = ({ model, cardType, focusedField }) => {
         numberOfLines={1}
         onLayout={({ nativeEvent }) => setNameLayout(nativeEvent.layout)}
       >
-        {model.holderName.toUpperCase() || 'NAME SURNAME'}
+        {model.holderName.toUpperCase() || translations.nameSurname}
       </Text>
       <PlaceholderText
         style={[styles.bottomText, styles.expirationText]}
         value={model.expiration}
-        placeholder="MM/YY"
+        placeholder={translations.mmYY}
         onLayout={({ nativeEvent }) => setExpirationLayout(nativeEvent.layout)}
       />
       <Animated.View
