@@ -13,7 +13,7 @@ type Props = {
 }
 
 const FrontSide: React.FC<Props> = ({ model, cardType, focusedField }) => {
-  const { translations } = useContext(LibraryContext)
+  const { overrides, translations } = useContext(LibraryContext)
   const [numberLayout, setNumberLayout] = useState<LayoutRectangle | null>(null)
   const [nameLayout, setNameLayout] = useState<LayoutRectangle | null>(null)
   const [
@@ -65,7 +65,7 @@ const FrontSide: React.FC<Props> = ({ model, cardType, focusedField }) => {
         <CardIcon cardNumber={model.cardNumber} />
       </View>
       <PlaceholderText
-        style={styles.numberText}
+        style={[styles.numberText, overrides.cardPreview]}
         value={model.cardNumber}
         placeholder={
           cardType === 'american-express'
@@ -75,10 +75,12 @@ const FrontSide: React.FC<Props> = ({ model, cardType, focusedField }) => {
         onLayout={({ nativeEvent }) => setNumberLayout(nativeEvent.layout)}
       />
       <View style={styles.labelContainer}>
-        <Text style={styles.labelText}>
+        <Text style={[styles.labelText, overrides.labelText]}>
           {translations.cardHolderName.toUpperCase()}
         </Text>
-        <Text style={styles.labelText}>{translations.expiration}</Text>
+        <Text style={[styles.labelText, overrides.labelText]}>
+          {translations.expiration}
+        </Text>
       </View>
       <Text
         style={[
@@ -87,6 +89,7 @@ const FrontSide: React.FC<Props> = ({ model, cardType, focusedField }) => {
           {
             color: model.holderName ? 'white' : 'gray',
           },
+          overrides.cardHolderPreview,
         ]}
         numberOfLines={1}
         onLayout={({ nativeEvent }) => setNameLayout(nativeEvent.layout)}
@@ -94,7 +97,11 @@ const FrontSide: React.FC<Props> = ({ model, cardType, focusedField }) => {
         {model.holderName.toUpperCase() || translations.nameSurname}
       </Text>
       <PlaceholderText
-        style={[styles.bottomText, styles.expirationText]}
+        style={[
+          styles.bottomText,
+          styles.expirationText,
+          overrides.expirationPreview,
+        ]}
         value={model.expiration}
         placeholder={translations.mmYY}
         onLayout={({ nativeEvent }) => setExpirationLayout(nativeEvent.layout)}
@@ -102,6 +109,7 @@ const FrontSide: React.FC<Props> = ({ model, cardType, focusedField }) => {
       <Animated.View
         style={[
           styles.outline,
+          overrides.outline,
           {
             left: positionAnim.x,
             top: positionAnim.y,

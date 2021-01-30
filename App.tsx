@@ -46,6 +46,12 @@ const App: React.FC = () => {
               onPress={formMethods.handleSubmit(onSubmit)}
             />
           }
+          horizontalStart={false}
+          overrides={{
+            labelText: {
+              marginTop: 16,
+            },
+          }}
         />
       </View>
     </FormProvider>

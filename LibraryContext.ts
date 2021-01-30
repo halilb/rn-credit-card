@@ -1,4 +1,5 @@
 import { createContext } from 'react'
+import { TextStyle, ViewStyle } from 'react-native'
 
 export type TranslationsNonNull = {
   cardNumber: string
@@ -23,41 +24,46 @@ type Partial<T> = {
 }
 export type Translations = Partial<TranslationsNonNull>
 
+type Style = ViewStyle | TextStyle
+export type Overrides = {
+  cardPreview?: Style
+  labelText?: TextStyle
+  cardHolderPreview?: TextStyle
+  expirationPreview?: Style
+  outline?: ViewStyle
+  button?: ViewStyle
+  input?: ViewStyle
+  labelContainer?: ViewStyle
+  inputLabel?: TextStyle
+  errorText?: TextStyle
+}
+
+export type InputColors = {
+  focused?: string
+  errored?: string
+  regular?: string
+}
+
 export type LibraryProps = {
   useLottie?: boolean
+  horizontalStart?: boolean
   button?: React.ReactNode
   translations?: Translations
+  inputColors?: InputColors
+  overrides?: Overrides
 }
 export type ContextProps = LibraryProps & {
   translations: TranslationsNonNull
-}
-
-export function getTranslations(
-  translations: Translations = {},
-): TranslationsNonNull {
-  return {
-    cardNumber: 'Card Number',
-    cardHolderName: 'Cardholder Name',
-    nameSurname: 'Name Surname',
-    mmYY: 'MM/YY',
-    expiration: 'Expiration',
-    securityCode: 'Security Code',
-    next: 'Next',
-    done: 'Done',
-    cardNumberRequired: 'Card number is required.',
-    cardNumberInvalid: 'This card number looks invalid.',
-    cardHolderNameRequired: 'Cardholder name is required.',
-    cardHolderNameInvalid: 'This cardholder name looks invalid.',
-    expirationRequired: 'Expiration date is required.',
-    expirationInvalid: 'This expiration date looks invalid.',
-    securityCodeRequired: 'Security code is required.',
-    securityCodeInvalid: 'This security date looks invalid.',
-    ...translations,
-  }
+  overrides: Overrides
 }
 
 const LibraryContext = createContext<ContextProps>({
   useLottie: true,
+  horizontalStart: true,
+  overrides: {},
+  inputColors: {},
+  // @ts-ignore
+  translations: {},
 })
 
 export default LibraryContext

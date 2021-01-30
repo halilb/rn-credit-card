@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import {
   Text,
   TextInput,
@@ -8,6 +8,7 @@ import {
   Easing,
   TouchableWithoutFeedback,
 } from 'react-native'
+import LibraryContext from '../LibraryContext'
 
 type Props = React.ComponentProps<typeof TextInput> & {
   label: string
@@ -26,6 +27,13 @@ const TextField = React.forwardRef<TextInput, Props>((props, ref) => {
     onFocus,
     ...restOfProps
   } = props
+  const { inputColors = {}, overrides } = useContext(LibraryContext)
+  const {
+    errored: errorColor = '#B00020',
+    focused: focusedColor = '#080F9C',
+    regular: regularColor = '#B9C4CA',
+  } = inputColors
+
   const [isFocused, setIsFocused] = useState(false)
 
   const focusAnim = useRef(new Animated.Value(0)).current
@@ -39,9 +47,9 @@ const TextField = React.forwardRef<TextInput, Props>((props, ref) => {
     }).start()
   }, [focusAnim, isFocused, value])
 
-  let color = isFocused ? '#080F9C' : '#B9C4CA'
+  let color = isFocused ? focusedColor : regularColor
   if (errorText) {
-    color = '#B00020'
+    color = errorColor
   }
 
   return (
@@ -49,6 +57,7 @@ const TextField = React.forwardRef<TextInput, Props>((props, ref) => {
       <TextInput
         style={[
           styles.input,
+          overrides.input,
           {
             borderColor: color,
           },
@@ -96,11 +105,13 @@ const TextField = React.forwardRef<TextInput, Props>((props, ref) => {
                 },
               ],
             },
+            overrides.labelContainer,
           ]}
         >
           <Text
             style={[
               styles.label,
+              overrides.inputLabel,
               {
                 color,
               },
@@ -114,7 +125,9 @@ const TextField = React.forwardRef<TextInput, Props>((props, ref) => {
       {endEnhancer && (
         <View style={styles.enhancerContainer}>{endEnhancer}</View>
       )}
-      {!!errorText && <Text style={styles.error}>{errorText}</Text>}
+      {!!errorText && (
+        <Text style={[styles.error, overrides.errorText]}>{errorText}</Text>
+      )}
     </View>
   )
 })

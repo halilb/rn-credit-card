@@ -7,15 +7,13 @@ import {
   cardNumberFormatter,
   expirationDateFormatter,
 } from '../utils/formatters'
-import LibraryContext, {
-  getTranslations,
-  LibraryProps,
-} from '../LibraryContext'
+import LibraryContext, { LibraryProps } from '../LibraryContext'
 import CardIcon from './CardIcon'
 import { CardFields } from './Card/index'
 import FormCard from './FormCard'
 import Button from './Button'
 import Conditional from './Conditional'
+import { getTranslations } from '../utils/translations'
 
 export interface FormModel {
   holderName: string
@@ -25,14 +23,19 @@ export interface FormModel {
 }
 
 const CreditCardForm: React.FC<LibraryProps> = (props) => {
-  const translations = getTranslations(props.translations)
+  const {
+    horizontalStart = true,
+    translations: parentTranslations,
+    overrides,
+  } = props
+  const translations = getTranslations(parentTranslations)
   const { trigger, watch } = useFormContext()
   const cardNumber = watch('cardNumber')
   const { card } = cardValidator.number(cardNumber)
   const isAmex = card?.type === 'american-express'
   const cvvLength = isAmex ? 4 : 3
 
-  const [isHorizontal, setIsHorizontal] = useState(true)
+  const [isHorizontal, setIsHorizontal] = useState(horizontalStart)
 
   const scrollRef = useRef<ScrollView>(null)
   const holderNameRef = useRef<TextInput>(null)
@@ -80,6 +83,7 @@ const CreditCardForm: React.FC<LibraryProps> = (props) => {
     <LibraryContext.Provider
       value={{
         ...props,
+        overrides: props.overrides || {},
         translations,
       }}
     >
@@ -191,7 +195,7 @@ const CreditCardForm: React.FC<LibraryProps> = (props) => {
         </ScrollView>
         <Conditional condition={isHorizontal} fallback={props.button}>
           <Button
-            style={styles.button}
+            style={[styles.button, overrides?.button]}
             title={
               focusedField === CardFields.CVV
                 ? translations.done

@@ -1,11 +1,13 @@
 import React from 'react'
 import { Text, StyleSheet, LayoutChangeEvent, ViewStyle } from 'react-native'
 
+type Style = ViewStyle | undefined
+
 type Props = {
   value: string
   placeholder: string
   onLayout?: (event: LayoutChangeEvent) => void
-  style?: ViewStyle[] | ViewStyle
+  style?: Style[] | ViewStyle
 }
 
 const PlaceholderText: React.FC<Props> = (props) => {
