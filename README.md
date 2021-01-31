@@ -4,6 +4,10 @@ This is a fully functional and animated credit card form library, and it's ready
 
 ![horizontal demo](./assets/card-form-first-low.gif)
 
+---
+
+## Features
+
 - Works on iOS and Android.
 - Validations.
 - Card icon animation with `Lottie`.
