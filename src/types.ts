@@ -44,7 +44,6 @@ export type Overrides = {
   cardHolderPreview?: TextStyle
   expirationPreview?: Style
   outline?: ViewStyle
-  button?: ViewStyle
   input?: ViewStyle
   labelContainer?: ViewStyle
   inputLabel?: TextStyle
@@ -60,7 +59,6 @@ export type InputColors = {
 export type LibraryProps = {
   LottieView?: any
   horizontalStart?: boolean
-  button?: React.ReactNode
   backgroundImage?: React.ReactNode
   translations?: Translations
   inputColors?: InputColors

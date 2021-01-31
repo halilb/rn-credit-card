@@ -18,17 +18,11 @@ import {
 import LibraryContext from '../LibraryContext'
 import CardIcon from './CardIcon'
 import FormCard from './FormCard'
-import Button from './Button'
-import Conditional from './Conditional'
 import { getTranslations } from '../utils/translations'
 import { CardFields, LibraryProps } from '../types'
 
 const CreditCardForm: React.FC<LibraryProps> = (props) => {
-  const {
-    horizontalStart = true,
-    translations: parentTranslations,
-    overrides,
-  } = props
+  const { horizontalStart = true, translations: parentTranslations } = props
   const translations = getTranslations(parentTranslations)
   const { trigger, watch } = useFormContext()
   const cardNumber = watch('cardNumber')
@@ -208,17 +202,6 @@ const CreditCardForm: React.FC<LibraryProps> = (props) => {
             />
           </View>
         </ScrollView>
-        <Conditional condition={isHorizontal} fallback={props.button}>
-          <Button
-            style={[styles.button, overrides?.button]}
-            title={
-              focusedField === CardFields.CVV
-                ? translations.done
-                : translations.next
-            }
-            onPress={goNext}
-          />
-        </Conditional>
       </View>
     </LibraryContext.Provider>
   )
@@ -240,15 +223,6 @@ const styles = StyleSheet.create({
   regularField: {
     flex: 1,
     marginTop: 24,
-  },
-  button: {
-    width: 100,
-    alignSelf: 'flex-end',
-    borderTopLeftRadius: 32,
-    borderBottomLeftRadius: 32,
-    borderTopRightRadius: 8,
-    borderBottomRightRadius: 24,
-    backgroundColor: '#0093E9',
   },
 })
 
