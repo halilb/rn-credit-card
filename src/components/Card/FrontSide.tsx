@@ -67,8 +67,6 @@ const FrontSide: React.FC<Props> = ({ model, cardType, focusedField }) => {
     positionAnim,
   ])
 
-  console.log({ windowWidth })
-
   return (
     <>
       <View style={styles.header}>

@@ -3,7 +3,6 @@ import { FormProvider, useForm } from 'react-hook-form'
 import {
   Alert,
   StyleSheet,
-  View,
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
@@ -15,8 +14,8 @@ import {
   RobotoMono_700Bold,
 } from '@expo-google-fonts/roboto-mono'
 
-import Button from './components/Button'
-import CreditCardForm, { FormModel } from './components/CreditCardForm'
+import Button from './src/components/Button'
+import CreditCardForm, { FormModel } from './src/components/CreditCardForm'
 
 const App: React.FC = () => {
   let [fontsLoaded] = useFonts({
