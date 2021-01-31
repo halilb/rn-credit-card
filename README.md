@@ -295,7 +295,11 @@ This props might be used to override some component styles within the library. A
 | inputLabel        | TextStyle              |
 | errorText         | TextStyle              |
 
-### Credits
+## Credits
 
 - The design is from [Pawel Szymankiewicz](https://dribbble.com/shots/6440077-Add-a-New-Credit-Card-alternate-flow).
 - Card icon animations are from [Tim John](https://lottiefiles.com/timjohn).
+
+## Licence
+
+[MIT](http://opensource.org/licenses/mit-license.html)
