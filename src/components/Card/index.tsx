@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef } from 'react'
-import { Image, StyleSheet, View } from 'react-native'
+import { Image, StyleSheet } from 'react-native'
 import FlipCard from 'react-native-card-flip'
 import LibraryContext from '../../LibraryContext'
 

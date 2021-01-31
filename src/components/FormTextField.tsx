@@ -38,7 +38,7 @@ const FormTextField = React.forwardRef<TextInput, Props>((props, ref) => {
   return (
     <Controller
       control={control}
-      render={({ onChange, onBlur: onBlurLocal, value }) => (
+      render={({ onChange, onBlur: onBlurLocal, value: newValue }) => (
         <TextField
           // passing everything down to TextField
           // to be able to support all TextInput props
@@ -51,10 +51,10 @@ const FormTextField = React.forwardRef<TextInput, Props>((props, ref) => {
             onBlur?.(event)
           }}
           onChangeText={(text) => {
-            const newValue = formatter ? formatter(value, text) : text
-            onChange(newValue)
+            const formatted = formatter ? formatter(newValue, text) : text
+            onChange(formatted)
           }}
-          value={value}
+          value={newValue}
         />
       )}
       name={name}
