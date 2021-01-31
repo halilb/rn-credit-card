@@ -58,7 +58,7 @@ export type InputColors = {
 }
 
 export type LibraryProps = {
-  useLottie?: boolean
+  LottieView?: any
   horizontalStart?: boolean
   button?: React.ReactNode
   backgroundImage?: React.ReactNode

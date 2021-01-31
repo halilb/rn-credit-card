@@ -8,7 +8,7 @@ export type ContextProps = LibraryProps & {
 
 const LibraryContext = createContext<ContextProps>({
   // iOS only
-  useLottie: true,
+  LottieView: undefined,
   // iOS only
   horizontalStart: true,
   overrides: {},

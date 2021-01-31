@@ -13,6 +13,7 @@ import {
   RobotoMono_400Regular,
   RobotoMono_700Bold,
 } from '@expo-google-fonts/roboto-mono'
+import LottieView from 'lottie-react-native'
 
 import CreditCardForm, { Button, FormModel } from 'rn-credit-card'
 
@@ -49,7 +50,7 @@ const App: React.FC = () => {
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         >
           <CreditCardForm
-            useLottie
+            LottieView={LottieView}
             horizontalStart
             overrides={{
               labelText: {

@@ -1,5 +1,5 @@
-import React, { useCallback, useContext, useState } from 'react'
-import { Image, StyleSheet, Platform } from 'react-native'
+import React, { useCallback, useContext } from 'react'
+import { Image, StyleSheet } from 'react-native'
 import cardValidator from 'card-validator'
 import LibraryContext from '../../LibraryContext'
 
@@ -34,15 +34,9 @@ const CARDS: Record<string, Card> = {
 }
 
 const CardIcon: React.FC<Props> = (props) => {
-  const { useLottie } = useContext(LibraryContext)
+  const { LottieView } = useContext(LibraryContext)
   const { cardNumber } = props
   const { card } = cardValidator.number(cardNumber)
-
-  // use a local state to prevent repetitive require calls
-  const [LottieView] = useState(() => {
-    if (!useLottie || Platform.OS === 'android') return null
-    return require('lottie-react-native')
-  })
 
   const animRef = useCallback((node) => {
     if (node !== null) {

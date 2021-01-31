@@ -22,8 +22,8 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-hook-form": "^6.14.0",
-    "rn-credit-card": "file:../",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz"
+    "react-native": "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz",
+    "rn-credit-card": "file:.."
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
