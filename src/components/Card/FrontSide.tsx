@@ -3,12 +3,12 @@ import {
   Animated,
   LayoutRectangle,
   StyleSheet,
-  Text,
   useWindowDimensions,
   View,
 } from 'react-native'
 import CardIcon from '../CardIcon'
 import PlaceholderText from './PlaceholderText'
+import Text from '../Text'
 import LibraryContext from '../../LibraryContext'
 import { CardFields, FormModel } from '../../types'
 
@@ -148,7 +148,6 @@ const styles = StyleSheet.create({
     color: 'white',
     letterSpacing: 2,
     lineHeight: 36,
-    fontFamily: 'RobotoMono_700Bold',
   },
   bottomText: {
     position: 'absolute',
@@ -156,7 +155,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     letterSpacing: 2,
     color: 'white',
-    fontFamily: 'RobotoMono_700Bold',
     alignSelf: 'flex-start',
   },
   nameText: {
@@ -179,7 +177,6 @@ const styles = StyleSheet.create({
   labelText: {
     marginBottom: 4,
     fontSize: 12,
-    fontFamily: 'RobotoMono_400Regular',
     color: 'white',
     letterSpacing: 1,
   },

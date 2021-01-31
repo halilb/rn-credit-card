@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import {
-  Text,
   TextInput,
   StyleSheet,
   View,
@@ -8,6 +7,7 @@ import {
   Easing,
   TouchableWithoutFeedback,
 } from 'react-native'
+import Text from './Text'
 import LibraryContext from '../LibraryContext'
 
 type Props = React.ComponentProps<typeof TextInput> & {
@@ -27,7 +27,7 @@ const TextField = React.forwardRef<TextInput, Props>((props, ref) => {
     onFocus,
     ...restOfProps
   } = props
-  const { inputColors = {}, overrides } = useContext(LibraryContext)
+  const { inputColors = {}, fonts, overrides } = useContext(LibraryContext)
   const {
     errored: errorColor = '#B00020',
     focused: focusedColor = '#080F9C',
@@ -57,6 +57,9 @@ const TextField = React.forwardRef<TextInput, Props>((props, ref) => {
       <TextInput
         style={[
           styles.input,
+          {
+            fontFamily: fonts.regular,
+          },
           overrides.input,
           {
             borderColor: color,
@@ -116,6 +119,7 @@ const TextField = React.forwardRef<TextInput, Props>((props, ref) => {
                 color,
               },
             ]}
+            bold
           >
             {label}
             {errorText ? '*' : ''}
@@ -137,7 +141,6 @@ const styles = StyleSheet.create({
     padding: 24,
     borderWidth: 1,
     borderRadius: 4,
-    fontFamily: 'RobotoMono_400Regular',
     fontSize: 16,
   },
   labelContainer: {
@@ -146,7 +149,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   label: {
-    fontFamily: 'RobotoMono_700Bold',
     fontSize: 14,
   },
   enhancerContainer: {
@@ -159,7 +161,6 @@ const styles = StyleSheet.create({
     marginLeft: 12,
     fontSize: 12,
     color: '#B00020',
-    fontFamily: 'RobotoMono_400Regular',
   },
 })
 

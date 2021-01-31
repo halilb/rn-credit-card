@@ -46,6 +46,12 @@ If you'd like to use the library on Android, make sure you're using a `lottie-re
 
 Additional steps might be needed depending on your platform. Please check [lottie-react-native documentation](https://github.com/lottie-react-native/lottie-react-native#installing-react-native--0600).
 
+### Configuring Fonts
+
+The library uses [Roboto Mono](https://fonts.google.com/specimen/Roboto+Mono) font by default. If you'd like to keep it that way, you need to import `RobotoMono_400Regular` and `RobotoMono_700Bold` fonts to your project. Please see [Expo](https://docs.expo.io/versions/latest/sdk/font/) or [this dev.to post](https://dev.to/aneeqakhan/add-custom-fonts-in-react-native-0-63-for-ios-and-android-3a9e) for more information.
+
+You may also use custom fonts with this library. Please see [#fonts](#fonts) section.
+
 ## Usage
 
 You need to create a `react-hook-form` and pass it down to the `CreditCardForm` through `FormProvider` context. This structure helps you accessing every propery and method of the form so you can build some features on top of the library.
@@ -188,6 +194,28 @@ Example:
       source={background}
     />
   }
+/>
+```
+
+### fonts
+
+`fonts` props take an object with two fields:
+
+| field         | type   | default               | required |
+| ------------- | ------ | --------------------- | -------- |
+| fonts.regular | string | RobotoMono_400Regular | NO       |
+| fonts.bold    | string | RobotoMono_700Bold    | NO       |
+
+Please note that you should use a [Monospaced font](https://en.wikipedia.org/wiki/Monospaced_font) for the best user experience. The fixed width helps maintaining the same card number width while the user types.
+
+Example:
+
+```tsx
+<CreditCardForm
+  fonts={{
+    regular: 'RobotoMono_400Regular',
+    bold: 'RobotoMono_700Bold',
+  }}
 />
 ```
 

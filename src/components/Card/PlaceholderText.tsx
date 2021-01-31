@@ -1,5 +1,6 @@
 import React from 'react'
-import { Text, StyleSheet, LayoutChangeEvent, ViewStyle } from 'react-native'
+import { StyleSheet, LayoutChangeEvent, ViewStyle } from 'react-native'
+import Text from '../Text'
 
 type Style = ViewStyle | undefined
 
@@ -15,7 +16,7 @@ const PlaceholderText: React.FC<Props> = (props) => {
   const rest = placeholder.substring(value.length)
 
   return (
-    <Text style={style} numberOfLines={1} onLayout={onLayout}>
+    <Text style={style} bold numberOfLines={1} onLayout={onLayout}>
       {value}
       <Text style={styles.placeholder}>{rest}</Text>
     </Text>

@@ -56,11 +56,17 @@ export type InputColors = {
   regular?: string
 }
 
+export type Fonts = {
+  regular?: string
+  bold?: string
+}
+
 export type LibraryProps = {
   LottieView?: any
   horizontalStart?: boolean
   backgroundImage?: React.ReactNode
   translations?: Translations
   inputColors?: InputColors
+  fonts?: Fonts
   overrides?: Overrides
 }

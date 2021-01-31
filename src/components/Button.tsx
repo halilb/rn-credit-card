@@ -1,5 +1,6 @@
 import React from 'react'
-import { StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { StyleSheet, TouchableOpacity } from 'react-native'
+import Text from './Text'
 
 type Props = React.ComponentProps<typeof TouchableOpacity> & {
   title: string
@@ -25,7 +26,6 @@ const styles = StyleSheet.create({
   },
   text: {
     color: 'white',
-    fontFamily: 'RobotoMono_400Regular',
     fontSize: 16,
   },
 })

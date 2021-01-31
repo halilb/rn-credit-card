@@ -57,7 +57,6 @@ const styles = StyleSheet.create({
   },
   cvvText: {
     backgroundColor: 'white',
-    fontFamily: 'RobotoMono_700Bold',
     paddingHorizontal: 4,
     paddingVertical: 2,
   },

@@ -1,16 +1,17 @@
 import { createContext } from 'react'
-import { LibraryProps, Overrides, TranslationsNonNull } from './types'
+import { Fonts, LibraryProps, Overrides, TranslationsNonNull } from './types'
 
 export type ContextProps = LibraryProps & {
+  fonts: Fonts
   translations: TranslationsNonNull
   overrides: Overrides
 }
 
 const LibraryContext = createContext<ContextProps>({
-  // iOS only
   LottieView: undefined,
   // iOS only
   horizontalStart: true,
+  fonts: {},
   overrides: {},
   inputColors: {},
   // @ts-ignore
