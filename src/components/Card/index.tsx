@@ -1,18 +1,11 @@
 import React, { useContext, useEffect, useRef } from 'react'
 import { Image, StyleSheet } from 'react-native'
 import FlipCard from 'react-native-card-flip'
+import { CardFields, FormModel } from '../../types'
 import LibraryContext from '../../LibraryContext'
 
-import { FormModel } from '../CreditCardForm'
 import BackSide from './BackSide'
 import FrontSide from './FrontSide'
-
-export enum CardFields {
-  CardNumber,
-  CardHolderName,
-  Expiration,
-  CVV,
-}
 
 type Props = {
   focusedField: CardFields | null

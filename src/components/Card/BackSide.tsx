@@ -1,7 +1,7 @@
 import React from 'react'
 import { Image, StyleSheet, View } from 'react-native'
+import { FormModel } from '../../types'
 import CardIcon from '../CardIcon'
-import { FormModel } from '../CreditCardForm'
 import PlaceholderText from './PlaceholderText'
 
 type Props = {

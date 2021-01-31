@@ -1,0 +1,53 @@
+{
+  "name": "rn-credit-card-example",
+  "version": "0.1.0",
+  "description": "Credit card form example for react native",
+  "license": "MIT",
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "eject": "expo eject",
+    "test": "jest",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+  },
+  "dependencies": {
+    "@expo-google-fonts/roboto-mono": "^0.1.0",
+    "expo": "~40.0.0",
+    "expo-app-loading": "^1.0.1",
+    "expo-font": "~8.4.0",
+    "lottie-react-native": "~2.6.1",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
+    "react-hook-form": "^6.14.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz"
+  },
+  "devDependencies": {
+    "@babel/core": "~7.9.0",
+    "@react-native-community/eslint-config": "^2.0.0",
+    "@testing-library/react-native": "^7.1.0",
+    "@types/jest": "^26.0.20",
+    "@types/react": "~16.9.35",
+    "@types/react-dom": "~16.9.8",
+    "@types/react-native": "~0.63.2",
+    "eslint": "^7.19.0",
+    "husky": ">=4",
+    "jest-expo": "^40.0.1",
+    "lint-staged": ">=10",
+    "react-test-renderer": "^17.0.1",
+    "typescript": "~4.0.0"
+  },
+  "jest": {
+    "preset": "jest-expo"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": "eslint --cache --fix"
+  }
+}

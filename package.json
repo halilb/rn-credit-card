@@ -1,32 +1,41 @@
 {
   "name": "rn-credit-card",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Credit card form for react native",
   "license": "MIT",
-  "main": "node_modules/expo/AppEntry.js",
+  "keywords": [
+    "react",
+    "react-component",
+    "react-native",
+    "credit card input",
+    "credit card form",
+    "textfield",
+    "animation",
+    "animated",
+    "ios",
+    "android"
+  ],
+  "main": "lib/commonjs/index",
   "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web",
-    "eject": "expo eject",
+    "start": "yarn start",
     "test": "jest",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "build": "bob build && yarn copy-dts",
+    "copy-dts": "copyfiles -u 1 \"src/**/*.d.ts\" lib/typescript",
+    "example": "yarn --cwd example",
+    "bootstrap": "yarn install && yarn example"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/halilb/rn-credit-card.git"
   },
   "dependencies": {
-    "@expo-google-fonts/roboto-mono": "^0.1.0",
     "card-validator": "^8.1.0",
-    "expo": "~40.0.0",
-    "expo-app-loading": "^1.0.1",
-    "expo-font": "~8.4.0",
-    "expo-status-bar": "~1.0.3",
-    "lottie-react-native": "~2.6.1",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
-    "react-hook-form": "^6.14.0",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz",
-    "react-native-card-flip": "^1.0.7",
-    "react-native-web": "~0.13.12"
+    "react-hook-form": ">6.14.0",
+    "react-native-card-flip": "^1.0.7"
+  },
+  "peerDependencies": {
+    "lottie-react-native": ">2.6.1"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
@@ -34,18 +43,20 @@
     "@testing-library/react-native": "^7.1.0",
     "@types/jest": "^26.0.20",
     "@types/react": "~16.9.35",
-    "@types/react-dom": "~16.9.8",
     "@types/react-native": "~0.63.2",
     "bdd-lazy-var": "^2.6.0",
+    "copyfiles": "^2.4.1",
     "eslint": "^7.19.0",
     "husky": ">=4",
-    "jest-expo": "^40.0.1",
     "lint-staged": ">=10",
+    "react-native-builder-bob": "^0.17.1",
     "react-test-renderer": "^17.0.1",
     "typescript": "~4.0.0"
   },
   "jest": {
-    "preset": "jest-expo"
+    "modulePathIgnorePatterns": [
+      "<rootDir>/lib/"
+    ]
   },
   "husky": {
     "hooks": {
@@ -54,5 +65,29 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": "eslint --cache --fix"
-  }
+  },
+  "react-native": "src/index.ts",
+  "module": "lib/module/index.js",
+  "types": "lib/typescript/index.d.ts",
+  "files": [
+    "src",
+    "lib",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__"
+  ],
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ]
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/",
+    "example/"
+  ]
 }

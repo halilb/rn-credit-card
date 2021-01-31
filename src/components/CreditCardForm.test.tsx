@@ -1,9 +1,10 @@
 import React from 'react'
 import { fireEvent, render, waitFor } from '@testing-library/react-native'
 import { def, get } from 'bdd-lazy-var/getter'
-import CreditCardForm, { FormModel } from './CreditCardForm'
+import CreditCardForm from './CreditCardForm'
 import { useForm, FormProvider } from 'react-hook-form'
 import { Button } from 'react-native'
+import { FormModel } from '../types'
 
 const Wrapper = () => {
   const formMethods = useForm({

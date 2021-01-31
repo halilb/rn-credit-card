@@ -15,20 +15,13 @@ import {
   cardNumberFormatter,
   expirationDateFormatter,
 } from '../utils/formatters'
-import LibraryContext, { LibraryProps } from '../LibraryContext'
+import LibraryContext from '../LibraryContext'
 import CardIcon from './CardIcon'
-import { CardFields } from './Card/index'
 import FormCard from './FormCard'
 import Button from './Button'
 import Conditional from './Conditional'
 import { getTranslations } from '../utils/translations'
-
-export interface FormModel {
-  holderName: string
-  cardNumber: string
-  expiration: string
-  cvv: string
-}
+import { CardFields, LibraryProps } from '../types'
 
 const CreditCardForm: React.FC<LibraryProps> = (props) => {
   const {

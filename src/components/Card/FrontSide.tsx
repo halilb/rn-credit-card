@@ -7,11 +7,10 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native'
-import { FormModel } from '../CreditCardForm'
-import { CardFields } from './index'
 import CardIcon from '../CardIcon'
 import PlaceholderText from './PlaceholderText'
 import LibraryContext from '../../LibraryContext'
+import { CardFields, FormModel } from '../../types'
 
 type Props = {
   model: FormModel

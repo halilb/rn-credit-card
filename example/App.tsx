@@ -14,8 +14,7 @@ import {
   RobotoMono_700Bold,
 } from '@expo-google-fonts/roboto-mono'
 
-import Button from './src/components/Button'
-import CreditCardForm, { FormModel } from './src/components/CreditCardForm'
+import CreditCardForm, { Button, FormModel } from 'rn-credit-card'
 
 const App: React.FC = () => {
   let [fontsLoaded] = useFonts({

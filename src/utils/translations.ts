@@ -1,4 +1,4 @@
-import { Translations, TranslationsNonNull } from '../LibraryContext'
+import { Translations, TranslationsNonNull } from '../types'
 
 export function getTranslations(
   translations: Translations = {},
