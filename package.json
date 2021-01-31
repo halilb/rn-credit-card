@@ -1,6 +1,6 @@
 {
   "name": "rn-credit-card",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Credit card form for react native",
   "license": "MIT",
   "keywords": [
@@ -34,7 +34,7 @@
     "react-native-card-flip": "^1.0.7"
   },
   "peerDependencies": {
-    "lottie-react-native": ">2.6.1",
+    "lottie-react-native": ">3.0.0",
     "react-hook-form": ">6.13.0"
   },
   "devDependencies": {
