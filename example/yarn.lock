@@ -7889,10 +7889,10 @@ rimraf@~2.2.6:
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.2.8.tgz#e439be2aaee327321952730f99a8929e4fc50582"
   integrity sha1-5Dm+Kq7jJzIZUnMPmaiSnk/FBYI=
 
-rn-credit-card@0.1.7:
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/rn-credit-card/-/rn-credit-card-0.1.7.tgz#e6636153170c30fa729416bdd1db68d2b9152be4"
-  integrity sha512-QhUpkUgggQhWhrU7zhQHRzobAz5XrgNxNaZhEp8dz2vF23aiXroU8Hn21iJv1EoUN26DkEKFaE3DZlBI/FFDUw==
+rn-credit-card@0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/rn-credit-card/-/rn-credit-card-0.2.0.tgz#7611fca42b3a5d9502f7e30edf2979aee813d811"
+  integrity sha512-kraxdemsNb1irBLTeVKU6W8yskRVRIpf7/NShN2PaHwnhDuRKx5MRMGGaXsmGaoj7Jkqag+yTPi05sdkClqaBA==
   dependencies:
     card-validator "^8.1.0"
     react-native-card-flip "^1.0.7"
