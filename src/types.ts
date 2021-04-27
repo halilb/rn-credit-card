@@ -45,6 +45,7 @@ export type Overrides = {
   expirationPreview?: Style
   outline?: ViewStyle
   input?: ViewStyle
+  button?: ViewStyle
   labelContainer?: ViewStyle
   inputLabel?: TextStyle
   errorText?: TextStyle
