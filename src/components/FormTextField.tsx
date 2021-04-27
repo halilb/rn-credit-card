@@ -21,7 +21,7 @@ const FormTextField = React.forwardRef<TextInput, Props>((props, ref) => {
     onValid,
     ...restOfProps
   } = props
-  const { control, errors, trigger, watch } = useFormContext()
+  const { control, formState, trigger, watch } = useFormContext()
   const value = watch(name)
 
   useEffect(() => {
@@ -38,23 +38,23 @@ const FormTextField = React.forwardRef<TextInput, Props>((props, ref) => {
   return (
     <Controller
       control={control}
-      render={({ onChange, onBlur: onBlurLocal, value: newValue }) => (
+      render={({ field }) => (
         <TextField
           // passing everything down to TextField
           // to be able to support all TextInput props
           {...restOfProps}
           ref={ref}
           testID={`TextField.${name}`}
-          errorText={errors[name]?.message}
+          errorText={formState.errors[name]?.message}
           onBlur={(event) => {
-            onBlurLocal()
+            field.onBlur()
             onBlur?.(event)
           }}
           onChangeText={(text) => {
-            const formatted = formatter ? formatter(newValue, text) : text
-            onChange(formatted)
+            const formatted = formatter ? formatter(field.value, text) : text
+            field.onChange(formatted)
           }}
-          value={newValue}
+          value={field.value}
         />
       )}
       name={name}
