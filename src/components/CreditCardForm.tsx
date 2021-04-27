@@ -106,7 +106,9 @@ const CreditCardForm: React.FC<LibraryProps> = (props) => {
       }}
     >
       <View style={styles.container}>
-        <FormCard cardType={card?.type} focusedField={focusedField} />
+        <Conditional condition={!props.formOnly}>
+          <FormCard cardType={card?.type} focusedField={focusedField} />
+        </Conditional>
         <ScrollView
           ref={scrollRef}
           style={isHorizontal && { maxHeight: 120 }}

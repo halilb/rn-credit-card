@@ -65,6 +65,7 @@ export type Fonts = {
 export type LibraryProps = {
   LottieView?: any
   horizontalStart?: boolean
+  formOnly?: boolean
   backgroundImage?: React.ReactNode
   translations?: Translations
   inputColors?: InputColors

@@ -175,6 +175,14 @@ This is the outcome when `horizontalStart` is `false`:
 
 ![vertical](./assets/card-form-second-low.gif)
 
+### formOnly
+
+When true, it hides the card view and displays the credit card form only.
+
+| type    | default | required | platform    |
+| ------- | ------- | -------- | ----------- |
+| boolean | false   | NO       | iOS/Android |
+
 ### backgroundImage
 
 You may use this prop to replace the background image of the card preview.
