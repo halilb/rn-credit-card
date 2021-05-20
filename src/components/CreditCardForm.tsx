@@ -194,17 +194,17 @@ const CreditCardForm: React.FC<LibraryProps> = (props) => {
               style={textFieldStyle}
               ref={cvvRef}
               name="cvv"
-              label="Security Code"
+              label={translations.securityCode}
               keyboardType="number-pad"
               maxLength={cvvLength}
               validationLength={cvvLength}
               rules={{
-                required: 'Security code is required.',
+                required: translations.securityCodeRequired,
                 validate: {
                   isValid: (value: string) => {
                     return (
                       cardValidator.cvv(value, cvvLength).isValid ||
-                      'This security code looks invalid.'
+                      translations.securityCodeInvalid
                     )
                   },
                 },
