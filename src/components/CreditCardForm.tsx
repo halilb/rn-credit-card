@@ -147,12 +147,12 @@ const CreditCardForm: React.FC<LibraryProps> = (props) => {
             name="holderName"
             label={translations.cardHolderName}
             rules={{
-              required: translations.cardNumberRequired,
+              required: translations.cardHolderNameRequired,
               validate: {
                 isValid: (value: string) => {
                   return (
                     cardValidator.cardholderName(value).isValid ||
-                    translations.cardNumberInvalid
+                    translations.cardHolderNameInvalid
                   )
                 },
               },
