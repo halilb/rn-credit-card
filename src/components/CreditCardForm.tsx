@@ -123,6 +123,7 @@ const CreditCardForm: React.FC<LibraryProps> = (props) => {
             name="cardNumber"
             label={translations.cardNumber}
             keyboardType="number-pad"
+            autoCompleteType="cc-number"
             maxLength={19}
             validationLength={isAmex ? 18 : 19}
             rules={{
@@ -145,6 +146,7 @@ const CreditCardForm: React.FC<LibraryProps> = (props) => {
             style={textFieldStyle}
             ref={holderNameRef}
             name="holderName"
+            autoCompleteType="name"
             label={translations.cardHolderName}
             rules={{
               required: translations.cardHolderNameRequired,
@@ -173,6 +175,7 @@ const CreditCardForm: React.FC<LibraryProps> = (props) => {
               name="expiration"
               label={translations.expiration}
               keyboardType="number-pad"
+              autoCompleteType="cc-exp"
               maxLength={5}
               validationLength={5}
               rules={{
@@ -196,6 +199,7 @@ const CreditCardForm: React.FC<LibraryProps> = (props) => {
               name="cvv"
               label={translations.securityCode}
               keyboardType="number-pad"
+              autoCompleteType="cc-csc"
               maxLength={cvvLength}
               validationLength={cvvLength}
               rules={{
