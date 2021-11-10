@@ -318,7 +318,7 @@ When false, it hides the CardHolder Name field.
 
 | type         | default   | required | platform    |
 | ------------ | --------- | -------- | ----------- |
-| requiresName | true      | NO       | iOS/Android |
+| boolean      | true      | NO       | iOS/Android |
 
 Example
  
