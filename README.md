@@ -309,6 +309,28 @@ This props might be used to override some component styles within the library. A
 | inputLabel        | TextStyle              |
 | errorText         | TextStyle              |
 
+
+
+### requiresName
+
+An optional prop that allows you to hide the cardholder Name from both the form and the card view. 
+When false, it hides the CardHolder Name field.
+
+| type         | default   | required | platform    |
+| ------------ | --------- | -------- | ----------- |
+| requiresName | true      | NO       | iOS/Android |
+
+Example
+ 
+```tsx
+<CreditCardForm
+  LottieView={LottieView}
+  horizontalStart
+  requiresName={false}
+/>
+```
+
+
 ## Credits
 
 - The design is from [Pawel Szymankiewicz](https://dribbble.com/shots/6440077-Add-a-New-Credit-Card-alternate-flow).

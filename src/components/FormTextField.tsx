@@ -30,7 +30,7 @@ const FormTextField = React.forwardRef<TextInput, Props>((props, ref) => {
       if (isValid) onValid?.()
     }
 
-    if (value && value.length >= validationLength) {
+    if (value?.length >= validationLength) {
       validate()
     }
   }, [value, name, validationLength, trigger]) // eslint-disable-line react-hooks/exhaustive-deps

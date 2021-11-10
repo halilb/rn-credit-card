@@ -22,8 +22,10 @@ const FrontSide: React.FC<Props> = ({ model, cardType, focusedField }) => {
   const { overrides, translations, requiresName } = useContext(LibraryContext)
   const [numberLayout, setNumberLayout] = useState<LayoutRectangle | null>(null)
   const [nameLayout, setNameLayout] = useState<LayoutRectangle | null>(null)
-  const [expirationLayout, setExpirationLayout] =
-    useState<LayoutRectangle | null>(null)
+  const [
+    expirationLayout,
+    setExpirationLayout,
+  ] = useState<LayoutRectangle | null>(null)
   const { width: windowWidth } = useWindowDimensions()
 
   const positionAnim = useRef(new Animated.ValueXY()).current
