@@ -19,7 +19,7 @@ type Props = {
 }
 
 const FrontSide: React.FC<Props> = ({ model, cardType, focusedField }) => {
-  const { overrides, translations } = useContext(LibraryContext)
+  const { overrides, translations, requiresName } = useContext(LibraryContext)
   const [numberLayout, setNumberLayout] = useState<LayoutRectangle | null>(null)
   const [nameLayout, setNameLayout] = useState<LayoutRectangle | null>(null)
   const [
@@ -89,26 +89,28 @@ const FrontSide: React.FC<Props> = ({ model, cardType, focusedField }) => {
       />
       <View style={styles.labelContainer}>
         <Text style={[styles.labelText, overrides.labelText]}>
-          {translations.cardHolderName.toUpperCase()}
+          {requiresName ? translations.cardHolderName.toUpperCase() : ''}
         </Text>
         <Text style={[styles.labelText, overrides.labelText]}>
           {translations.expiration}
         </Text>
       </View>
-      <Text
-        style={[
-          styles.bottomText,
-          styles.nameText,
-          {
-            color: model.holderName ? 'white' : 'gray',
-          },
-          overrides.cardHolderPreview,
-        ]}
-        numberOfLines={1}
-        onLayout={({ nativeEvent }) => setNameLayout(nativeEvent.layout)}
-      >
-        {model.holderName.toUpperCase() || translations.nameSurname}
-      </Text>
+      {requiresName && (
+        <Text
+          style={[
+            styles.bottomText,
+            styles.nameText,
+            {
+              color: model.holderName ? 'white' : 'gray',
+            },
+            overrides.cardHolderPreview,
+          ]}
+          numberOfLines={1}
+          onLayout={({ nativeEvent }) => setNameLayout(nativeEvent.layout)}
+        >
+          {model.holderName.toUpperCase() || translations.nameSurname}
+        </Text>
+      )}
       <PlaceholderText
         style={[
           styles.bottomText,
