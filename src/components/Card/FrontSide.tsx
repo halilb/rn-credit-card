@@ -124,13 +124,13 @@ const FrontSide: React.FC<Props> = ({ model, cardType, focusedField }) => {
       <Animated.View
         style={[
           styles.outline,
-          overrides.outline,
           {
             left: positionAnim.x,
             top: positionAnim.y,
             width: sizeAnim.x,
             height: sizeAnim.y,
           },
+          overrides.outline,
         ]}
       />
     </>
