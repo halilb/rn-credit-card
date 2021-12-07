@@ -99,6 +99,19 @@ const CreditCardForm: React.FC<LibraryProps> = (props) => {
     ref.current?.focus()
   }
 
+  async function goBack() {
+    const field = ['cardNumber', 'holderName', 'expiration', 'cvv'][
+      focusedField
+    ]
+
+    scrollRef.current?.scrollTo({ x: (focusedField - 1) * inputWidth })
+
+    const ref = [cardNumberRef, holderNameRef, expirationRef, cvvRef][
+      focusedField - 1
+    ]
+    ref.current?.focus()
+  }
+
   return (
     <LibraryContext.Provider
       value={{
@@ -228,15 +241,34 @@ const CreditCardForm: React.FC<LibraryProps> = (props) => {
           </View>
         </ScrollView>
         <Conditional condition={isHorizontal}>
-          <Button
-            style={[styles.button, overrides?.button]}
-            title={
-              focusedField === CardFields.CVV
-                ? translations.done
-                : translations.next
-            }
-            onPress={goNext}
-          />
+          <View
+            style={{ justifyContent: 'space-between', flexDirection: 'row' }}
+          >
+            {focusedField !== CardFields.CardNumber ? (
+              <Button
+                style={[styles.buttonBack, overrides?.button]}
+                title={translations.back}
+                /*title={
+                  focusedField === CardFields.CardNumber
+                    ? translations.done
+                    : translations.next
+                }*/
+                onPress={goBack}
+              />
+            ) : (
+              <View />
+            )}
+
+            <Button
+              style={[styles.button, overrides?.button]}
+              title={
+                focusedField === CardFields.CVV
+                  ? translations.done
+                  : translations.next
+              }
+              onPress={goNext}
+            />
+          </View>
         </Conditional>
       </View>
     </LibraryContext.Provider>
@@ -262,12 +294,20 @@ const styles = StyleSheet.create({
   },
   button: {
     width: 100,
-    alignSelf: 'flex-end',
     borderTopLeftRadius: 32,
     borderBottomLeftRadius: 32,
     borderTopRightRadius: 8,
     borderBottomRightRadius: 24,
     backgroundColor: '#0093E9',
+  },
+
+  buttonBack: {
+    width: 100,
+    backgroundColor: '#2d2d2d',
+    borderTopLeftRadius: 8,
+    borderBottomLeftRadius: 32,
+    borderTopRightRadius: 32,
+    borderBottomRightRadius: 24,
   },
 })
 
