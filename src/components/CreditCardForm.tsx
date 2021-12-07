@@ -246,13 +246,8 @@ const CreditCardForm: React.FC<LibraryProps> = (props) => {
           >
             {focusedField !== CardFields.CardNumber ? (
               <Button
-                style={[styles.buttonBack, overrides?.button]}
+                style={[styles.buttonBack, overrides?.buttonBack]}
                 title={translations.back}
-                /*title={
-                  focusedField === CardFields.CardNumber
-                    ? translations.done
-                    : translations.next
-                }*/
                 onPress={goBack}
               />
             ) : (
