@@ -5,8 +5,10 @@ import {
   ScrollView,
   StyleSheet,
   TextInput,
+  TouchableOpacity,
   useWindowDimensions,
   View,
+  Text,
 } from 'react-native'
 import { useFormContext } from 'react-hook-form'
 import cardValidator from 'card-validator'
@@ -245,24 +247,40 @@ const CreditCardForm: React.FC<LibraryProps> = (props) => {
             style={{ justifyContent: 'space-between', flexDirection: 'row' }}
           >
             {focusedField !== CardFields.CardNumber ? (
-              <Button
-                style={[styles.buttonBack, overrides?.buttonBack]}
-                title={translations.back}
-                onPress={goBack}
-              />
+              <TouchableOpacity onPress={goBack}>
+                <View style={[styles.buttonBack, overrides?.buttonBack]}>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      color: 'white',
+                      textAlign: 'center',
+                      padding: 10,
+                    }}
+                  >
+                    {translations.back}
+                  </Text>
+                </View>
+              </TouchableOpacity>
             ) : (
               <View />
             )}
 
-            <Button
-              style={[styles.button, overrides?.button]}
-              title={
-                focusedField === CardFields.CVV
-                  ? translations.done
-                  : translations.next
-              }
-              onPress={goNext}
-            />
+            <TouchableOpacity onPress={goNext}>
+              <View style={[styles.button, overrides?.button]}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    color: 'white',
+                    textAlign: 'center',
+                    padding: 10,
+                  }}
+                >
+                  {focusedField === CardFields.CVV
+                    ? translations.done
+                    : translations.next}
+                </Text>
+              </View>
+            </TouchableOpacity>
           </View>
         </Conditional>
       </View>
@@ -289,6 +307,7 @@ const styles = StyleSheet.create({
   },
   button: {
     width: 100,
+    fontFamily: 'System',
     borderTopLeftRadius: 32,
     borderBottomLeftRadius: 32,
     borderTopRightRadius: 8,
