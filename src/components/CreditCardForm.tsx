@@ -160,7 +160,7 @@ const CreditCardForm: React.FC<LibraryProps> = (props) => {
               },
             }}
             formatter={cardNumberFormatter}
-            endEnhancer={<CardIcon cardNumber={cardNumber} />}
+            //endEnhancer={<CardIcon cardNumber={cardNumber} />}
             onFocus={() => setFocusedField(CardFields.CardNumber)}
             onValid={goNext}
           />
