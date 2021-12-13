@@ -5,8 +5,10 @@ import {
   ScrollView,
   StyleSheet,
   TextInput,
+  TouchableOpacity,
   useWindowDimensions,
   View,
+  Text,
 } from 'react-native'
 import { useFormContext } from 'react-hook-form'
 import cardValidator from 'card-validator'
@@ -99,6 +101,19 @@ const CreditCardForm: React.FC<LibraryProps> = (props) => {
     ref.current?.focus()
   }
 
+  async function goBack() {
+    const field = ['cardNumber', 'holderName', 'expiration', 'cvv'][
+      focusedField
+    ]
+
+    scrollRef.current?.scrollTo({ x: (focusedField - 1) * inputWidth })
+
+    const ref = [cardNumberRef, holderNameRef, expirationRef, cvvRef][
+      focusedField - 1
+    ]
+    ref.current?.focus()
+  }
+
   return (
     <LibraryContext.Provider
       value={{
@@ -145,7 +160,7 @@ const CreditCardForm: React.FC<LibraryProps> = (props) => {
               },
             }}
             formatter={cardNumberFormatter}
-            endEnhancer={<CardIcon cardNumber={cardNumber} />}
+            //endEnhancer={<CardIcon cardNumber={cardNumber} />}
             onFocus={() => setFocusedField(CardFields.CardNumber)}
             onValid={goNext}
           />
@@ -228,15 +243,45 @@ const CreditCardForm: React.FC<LibraryProps> = (props) => {
           </View>
         </ScrollView>
         <Conditional condition={isHorizontal}>
-          <Button
-            style={[styles.button, overrides?.button]}
-            title={
-              focusedField === CardFields.CVV
-                ? translations.done
-                : translations.next
-            }
-            onPress={goNext}
-          />
+          <View
+            style={{ justifyContent: 'space-between', flexDirection: 'row' }}
+          >
+            {focusedField !== CardFields.CardNumber ? (
+              <TouchableOpacity onPress={goBack}>
+                <View style={[styles.buttonBack, overrides?.buttonBack]}>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      color: 'white',
+                      textAlign: 'center',
+                      padding: 10,
+                    }}
+                  >
+                    {translations.back}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            ) : (
+              <View />
+            )}
+
+            <TouchableOpacity onPress={goNext}>
+              <View style={[styles.button, overrides?.button]}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    color: 'white',
+                    textAlign: 'center',
+                    padding: 10,
+                  }}
+                >
+                  {focusedField === CardFields.CVV
+                    ? translations.done
+                    : translations.next}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </View>
         </Conditional>
       </View>
     </LibraryContext.Provider>
@@ -262,12 +307,21 @@ const styles = StyleSheet.create({
   },
   button: {
     width: 100,
-    alignSelf: 'flex-end',
+    fontFamily: 'System',
     borderTopLeftRadius: 32,
     borderBottomLeftRadius: 32,
     borderTopRightRadius: 8,
     borderBottomRightRadius: 24,
     backgroundColor: '#0093E9',
+  },
+
+  buttonBack: {
+    width: 100,
+    backgroundColor: '#2d2d2d',
+    borderTopLeftRadius: 8,
+    borderBottomLeftRadius: 32,
+    borderTopRightRadius: 32,
+    borderBottomRightRadius: 24,
   },
 })
 

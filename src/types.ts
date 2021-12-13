@@ -46,6 +46,7 @@ export type Overrides = {
   outline?: ViewStyle
   input?: ViewStyle
   button?: ViewStyle
+  buttonBack?: ViewStyle
   labelContainer?: ViewStyle
   inputLabel?: TextStyle
   errorText?: TextStyle
