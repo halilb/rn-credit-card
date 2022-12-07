@@ -65,6 +65,7 @@ const TextField = React.forwardRef<TextInput, Props>((props, ref) => {
             borderColor: color,
           },
         ]}
+        placeholder={label}
         ref={ref}
         {...restOfProps}
         value={value}
@@ -110,21 +111,7 @@ const TextField = React.forwardRef<TextInput, Props>((props, ref) => {
             },
             overrides.labelContainer,
           ]}
-        >
-          <Text
-            style={[
-              styles.label,
-              overrides.inputLabel,
-              {
-                color,
-              },
-            ]}
-            bold
-          >
-            {label}
-            {errorText ? '*' : ''}
-          </Text>
-        </Animated.View>
+        ></Animated.View>
       </TouchableWithoutFeedback>
       {endEnhancer && (
         <View style={styles.enhancerContainer}>{endEnhancer}</View>
